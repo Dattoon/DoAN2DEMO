@@ -1,0 +1,46 @@
+﻿@model WebHocTap.Data.Entites.News
+
+@{
+    ViewData["Title"] = "DetailNews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styleclient{
+    <style>
+        .clearfix {
+            width: 960px;
+            margin: 0 auto;
+            padding-top:135px
+        }
+
+            .clearfix:after {
+                clear: both;
+                content: "";
+                display: block;
+                line-height: 0;
+                height: 1%;
+                visibility: hidden;
+            }
+
+        .frame2 {
+            background-position: 0 -517px;
+            height: 316px;
+            width: 924px;
+            margin: 0 auto 18px;
+            padding: 6px 7px 0;
+            text-align: center;
+        }
+    </style>
+}
+<div class="clearfix">
+    <div class="frame2">
+        <div class="box">
+            <img src="~/img/news/@Model.pathImg" alt="Img" height="298" width="350">
+        </div>
+    </div>
+    <h2 style="text-align:center">@Model.Title</h2>
+
+</div>
+<div class="container">
+    @Html.Raw(Model.Description)
+</div>

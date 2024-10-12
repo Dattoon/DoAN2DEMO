@@ -1,0 +1,102 @@
+﻿@model WebHocTap.Web.ViewModels.LoginClientVM
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+    <link href="~/clientLTE/css/login.css" rel="stylesheet" />
+    <title>Document</title>
+</head>
+<body>
+    <main class="main-login">
+        <div class="login-box">
+            <div class="login-row">
+                <div class="login-bg"></div>
+                <section class="login-section">
+                    <div class="login-box">
+                        <div class="container-row">
+                            <div class="container-col">
+                                <div class="container-row">
+                                    <div class="box">
+                                        <div class="card">
+                                            <h1 class="text-title">
+                                                <a href="index.html">
+                                                    <img src="/clientLTE/images/logo.png" alt="">
+                                                </a>
+                                                <a href="" class="closeDiv" title="close window"><i class="fal fa-xmark-large"></i></a>
+                                            </h1>
+                                            <div class="clear"></div>
+                                            <div class="divLogin">
+                                                <form asp-action="Login" method="post" class="loginForm" id="loginForm" novalidate="novalidate">
+                                                    <div class="input-box">
+                                                        <div class="input">
+                                                            <span class="txtClass">
+                                                                <i class="fa fa-user"></i>
+                                                            </span>
+                                                            <input asp-for="UserName" type="text" class="inputLogin txtClass form-control" id="user-email" placeholder="Enter Email ID / Phone Number ">
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-box">
+                                                        <div class="input">
+                                                            <span class="txtClass">
+                                                                <i class="fa fa-key"></i>
+                                                            </span>
+                                                            <span class="togglePassword" style="text-align:right;">
+                                                                <i class="fa fa-fw fa-eye-slash"></i>
+                                                            </span>
+                                                            <input type="password" asp-for="Password" class="inputLogin txtClass form-control" id="user-password" placeholder="Enter Password">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="clear"></div>
+
+                                                    <div class="formCheck">
+                                                        <div class="form-check">
+                                                            <label class="form-check-label" for="">
+                                                                <input type="checkbox" asp-for="RemeberMe" id="remember_me" class="login-wrap-checkbox chk-remember">
+                                                                Remember me
+                                                            </label>
+                                                        </div>
+                                                        <div class="text-primary-hover">
+                                                            <a href="forgotPassword.jsp" class="text-secondary" id="spanForgot">
+                                                                <u><i class="fa fa-user-check"></i> Forgot password?</u>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="clear"></div>
+
+                                                    <div class="loginSubmit">
+                                                        <div class="Submit-btn">
+                                                            <button class="btn-login" type="submit" id="user_login" value="Login" name="user_login"><i class="fa fa-sign-in" aria-hidden="true"></i> Đăng nhập</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="footerLogin">
+                                                <span>Bạn chưa có tài khoản? &nbsp;&nbsp;<a asp-action="SignUp" asp-controller="Account" id="spanForgot" class="ps-2"><b><i class="fa fa-sign-in" aria-hidden="true"></i> Tạo tài khoản mới</b></a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+    </main>
+</body>
+</html>
+
+

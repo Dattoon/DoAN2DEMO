@@ -1,0 +1,8 @@
+﻿@model IEnumerable<WebHocTap.Data.Entites.CategorySub>
+
+@foreach (var item in Model)
+{
+        <option value="@item.Id">
+           @item.NameCategorySub
+        </option>
+}

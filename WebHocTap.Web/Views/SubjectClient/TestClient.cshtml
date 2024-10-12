@@ -1,0 +1,96 @@
+﻿@model IEnumerable<WebHocTap.Web.ViewModels.Subject.TestAnswerClientVM>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/clientLTE/css/test.css" rel="stylesheet" asp-append-version="true" />
+
+    <title>Document</title>
+</head>
+<body>
+    <main class="test-page">
+        <div class="test-container">
+            <form action="" method="post">
+                <div class="test-box">
+                    <div class="test">
+                        <div class="test-head">
+                            <div class="test-title">
+                                <div class="test-line"></div>
+                                <div class="test-text">
+                                    <div class="text">
+                                        <div class="heading">
+                                            <b>Bài kiểm tra</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="test-body">
+                            @foreach (var ques in Model)
+                            {
+                                <div class="test-quest">
+                                    <div class="quest">
+                                        <div class="quest1">
+                                            <div class="quest2">
+                                                <div class="quest3">
+                                                    <span>@ques.Question</span>
+                                                    <span hidden class="js-number">@ques.Id</span>
+                                                    <div class="js-noti"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="answ">
+                                        <div class="answ1">
+                                            <span class="answ2">
+                                                <div class="answ3">
+                                                    <div class="answer-box">
+                                                        @foreach (var answer in ques.answers)
+                                                        {
+
+
+                                                            @if (answer.IsSucces)
+                                                            {
+                                                                <label class="formui-radio option">
+                                                                    <input type="radio" name="question[@ques.Id]" class="js-succes" value="@answer.Description" />
+                                                                    @answer.Description
+                                                                </label>
+                                                            }
+                                                            else
+                                                            {
+                                                            <label class="formui-radio option">
+                                                                <input type="radio" name="question[@ques.Id]" class="js-feld" value="@answer.Description" />
+                                                                @answer.Description
+                                                            </label>
+                                                                }
+                                                            }
+
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="test-footer">
+                            <input type="button" value="Submit" id="bnSuccess">
+                            <!-- <button type="button" id="bnSuccess">Success</button> -->
+                            <label style="display: none!important;"><input id="chCircle" type="checkbox" /> Close button as a circle</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="~/clientLTE/js/check.js" asp-append-version="true"></script>
+
+</body>
+</html>

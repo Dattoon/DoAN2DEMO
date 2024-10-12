@@ -1,0 +1,43 @@
+﻿@model WebHocTap.Web.ViewModels.Subject.ListSubject
+
+@{
+    ViewData["Title"] = "DetailsSubject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/clientLTE/css/lbrary.css" rel="stylesheet" />
+<section id="lbr-box">
+<h1 style="text-align: center;padding-top: 30px;">@Model.NameCategorySub</h1>
+    <div class="lbr-row">
+        <div class="row-feature">
+            <div class="featured-boxes">
+                @foreach (var item in Model.subjects)
+                {
+                    <div class="featured">
+                        <div class="featured-box">
+                            <h4>@item.NameSubject</h4>
+                            <ul class="menu">
+                                @foreach (var chapter in Model.chapters)
+                                {
+
+
+                                    @if (chapter.IdSubject == item.Id)
+                                    {
+                                        <li><a asp-action="Lesson" asp-controller="SubjectClient" asp-route-id="@chapter.Id">@chapter.NameChapter</a></li>
+                                    }
+                                    else {
+                                        continue;
+                                    }   
+                                }
+
+                                
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+
+    </div>
+</section>

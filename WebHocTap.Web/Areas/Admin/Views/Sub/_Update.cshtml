@@ -1,0 +1,30 @@
+﻿@model WebHocTap.Web.Areas.Admin.ViewModels.Sub.AddorUpdateSubVM
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="_Update">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group" hidden>
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control id-sub" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NameSubject" class="control-label"></label>
+                    <input asp-for="NameSubject" class="form-control" />
+                    <span asp-validation-for="NameSubject" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdCategorySub" class="control-label"></label>
+                    <select asp-for="IdCategorySub" class="form-control">
+                        <vc:list-category-sub-view-components selected="@Model.IdCategorySub"></vc:list-category-sub-view-components>
+                    </select>
+                    <span asp-validation-for="IdCategorySub" class="text-danger"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

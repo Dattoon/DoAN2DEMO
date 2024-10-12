@@ -1,0 +1,11 @@
+﻿.why-aconcept-item::before {
+	content: "";
+	position: relative !important;
+	width: 100% !important;
+	height: auto !important;
+	padding-top: 0% !important;
+}
+
+.our-value-pic::before {
+	padding-top: 20% !important;
+}

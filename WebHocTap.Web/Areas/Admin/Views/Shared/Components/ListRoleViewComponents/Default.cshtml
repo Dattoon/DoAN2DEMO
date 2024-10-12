@@ -1,0 +1,6 @@
+﻿@model IEnumerable<WebHocTap.Data.Entites.Role>
+
+@foreach (var item in Model)
+{
+    <option value="@item.Id">@item.RoleName</option>
+}

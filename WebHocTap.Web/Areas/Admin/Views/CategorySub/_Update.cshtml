@@ -1,0 +1,38 @@
+﻿@model WebHocTap.Web.Areas.Admin.ViewModels.CategorySub.AddorUpdateCategorySubVM
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="_Update">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control id-categorysub" readonly />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NameCategorySub" class="control-label"></label>
+                    <input asp-for="NameCategorySub" class="form-control" />
+                    <span asp-validation-for="NameCategorySub" class="text-danger"></span>
+                </div>
+                @if (Model.Price!= null){
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                }
+
+                <div class="form-group">
+                    <label asp-for="Descripstion" class="control-label">Mô tả</label>
+                    <input asp-for="Descripstion" class="form-control" />
+                    <span asp-validation-for="Descripstion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

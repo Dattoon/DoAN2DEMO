@@ -1,0 +1,197 @@
+:root {
+    --bs-gutter-y: 1.5rem;
+    --bs-gutter-x: 1.5rem;
+}
+
+#main {
+    z-index:500;
+    background: #eee;
+    padding-bottom: 1.6rem;
+}
+
+#main .container-lession {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-top: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+}
+
+#main .container-lession .row-lession {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+
+/* Left Col */
+#main .container-lession .row-lession .leftcol-lession {
+    display: inline;
+    margin-top: var(--bs-gutter-y);
+    padding-left: 0;
+    padding-right: 0;
+    -webkit-box-flex: 0;
+    flex: 0 0 auto;
+    width: 25%;
+}
+
+.leftcol-lession .card-lession {
+    position: relative;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    border: 0 solid rgba(0,0,0,.1);
+    border-radius: 0.5rem;
+    background: #eee;
+    padding-top: 0;
+    -webkit-box-flex: 1;
+    padding: 1rem 1.25rem;
+}
+
+.leftcol-lession .card-lession .mini-logo img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border-top-left-radius: 0.325rem!important;
+    border-top-right-radius: 0.325rem !important;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
+.leftcol-lession .card-lession ul {
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+}
+
+.leftcol-lession .card-lession ul li {
+    font-size: 15px;
+    color: #000;
+    text-align: left;
+    line-height: 20px;
+    margin: 0px;
+    padding: 5px 0px;
+}
+
+.leftcol-lession .card-lession ul.toc li {
+    display: block;
+    padding: 5px 0px;
+    margin: 0px;
+    list-style: disc;
+    border-bottom: 1px dotted #bbb;
+}
+
+ul.toc li a {
+    background: url(images/list-icon.png)no-repeat 5px 4px;
+    color: #000;
+    font-size: 15px;
+    padding: 2px 23px;
+    margin: 0px 0px 0px 5px;
+    list-style: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.leftcol-lession .card-lession ul.toc li.heading {
+    background: #003b57;
+    color: #fff;
+    margin: 4px 0px;
+    padding: 15px 0 15px 15px;
+}
+
+.current-chapter {
+    background-color: #b2b2b2;
+}
+
+ul.toc li.sreading {
+    background: #aaa;
+    color: #fff;
+    margin: 4px 0px;
+    padding: 15px 0 15px 15px;
+}
+
+/* Mid Col */
+.midcol-lession {
+    background: #fff;
+    padding: 15px;
+    border-radius: 0.5rem;
+    -webkit-box-flex: 0;
+    flex: 0 0 auto;
+    width: 50%;
+}
+
+.midcol-lession .cover {
+    background-size: cover;
+}
+
+.midcol-lession h1 {
+    padding: 35px 0px 20px 0px;
+    margin: 0px;
+    font-size: 28px;
+    font-weight: 500;
+    color: #303030;
+    text-align: center;
+    line-height: 1.25;
+}
+
+.midcol-lession .home-menu {
+    margin: 0 0 0.5rem 0;
+}
+.midcol-lession .home-menu form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tp-btn {
+    background: transparent;
+    width: 100%;
+    color: rgb(0,0,0,.90);
+    margin: 0px 1px 9px 1px;
+    padding: 5px 8px;
+    text-align: center;
+    border: 1px solid #cec9c9;
+    border-radius: 0.3rem;
+    -webkit-border-radius: 0.3rem;
+}
+
+.tp-btn a {
+    font-size: .82rem;
+    color: rgb(0,0,0,.90);
+    text-decoration: none;
+}
+
+.midcol-lession p {
+    font-size: 16px;
+    color: #000;
+    text-align: justify;
+    margin: 0.5em 0 0.6em 0em;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.bottom_navigation {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    border-top: 1px solid rgba(0,0,0,.1);
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.pre-btn, .nxt-btn {
+    background: transparent;
+    font-size: 0.90rem;
+    color: #303030;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    padding: 5px 14px;
+    border-radius: 0.3rem;
+    -webkit-border-radius: 0.3rem;
+    text-decoration: none;
+}

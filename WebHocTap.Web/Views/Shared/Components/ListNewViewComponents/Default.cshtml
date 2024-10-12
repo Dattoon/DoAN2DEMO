@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WebHocTap.Web.Components.ListNewViewComponents.ListNewVM>
+
+
+<!-- Lybrary -->
+<section id="lybrary">
+    <h1>Tin tức</h1>
+    @foreach (var item in Model)
+    {
+        <div class="lybrary-box">
+            <div class="lybraries">
+                <div class="card-lybraries">
+                    <div class="row-lybraries">
+                        <h5 class="lybraries-title"><i class="fa fa-cogs"></i> @item.NameCategoryNew</h5>
+                        @foreach (var news in item.news)
+                        {
+                            <div class="lybraries-item">
+                                <div class="item">
+                                    <a  asp-action="DetailNews" asp-controller="NewsClient" asp-route-id="@news.Id">
+                                        <img src="/img/news/@news.pathImg" alt="" class="image-tittle" style="width:30px;height:30px">
+                                        <p class="image-title">@news.Title</p>
+                                    </a>    
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+
+</section>

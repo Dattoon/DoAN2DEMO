@@ -1,0 +1,20 @@
+﻿@model IEnumerable<WebHocTap.Data.Entites.CategoryNew>
+
+@foreach (var item in Model)
+{
+    if (ViewBag.selected != null)
+    {
+        if (ViewBag.selected == item.Id)
+        {
+            <option value="@item.Id" selected>@item.NameCategoryNew</option>
+        }
+        else
+        {
+            <option value="@item.Id">@item.NameCategoryNew</option>
+        }
+    }
+    else
+    {
+        <option value="@item.Id">@item.NameCategoryNew</option>
+    }
+}

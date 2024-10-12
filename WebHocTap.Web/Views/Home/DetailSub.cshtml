@@ -1,0 +1,56 @@
+﻿@model WebHocTap.Data.Entites.CategorySub
+
+@{
+    ViewData["Title"] = "DetailSub";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styleclient{ 
+    <link href="~/clientLTE/css/detailsub.css" rel="stylesheet" />
+}
+<section class="product">
+    <div class="container-product">
+        <div class="row-product">
+            <div class="col-product-left">
+                <img src="/img/categorysub/@Model.pathImg" loading="lazy" alt="..." id="display-img" class="card-product">
+                <div class="minicard">
+                    <div class="colmini">
+                        <a href="" class="view-image active">
+                            <img src="/img/categorysub/@Model.pathImg" alt="" class="img-thumbnail">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-product-right">
+                <h1>@Model.NameCategorySub</h1>
+                <div class="price-card">
+                    Giá: <span id="price">@Model.Price.Value.ToString("#,##0") VNĐ</span>
+                    <br>
+                </div>
+                <div class="star">
+                    <span>(239)</span>
+                    <a class="fa fa-star s1"></a>
+                    <a class="fa fa-star s2"></a>
+                    <a class="fa fa-star s3"></a>
+                    <a class="fa fa-star s4"></a>
+                    <a class="fa fa-star s5"></a>
+
+                </div>
+                <form action="" id="add-cart">
+                    <div class="extend-card">
+                        <input type="hidden" name="price" value="200000">
+                        <input type="hidden" name="inventory_id" value="6">
+                        <input class="form-control" id="inputQuantity" type="num" value="1 Month" name="quantity">
+                        <button class="btn" type="submit" asp-action="PaypalCheckOut" asp-controller="Home" asp-route-id="@Model.Id">
+                            <i class="fa fa-credit-card"></i>
+                            Extend
+                        </button>
+                    </div>
+                </form>
+                <p class="lead"></p>
+                <p>
+                    @Model.Descripstion
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,95 @@
+﻿@using WebHocTap.Web.WebConfig.Const
+@using WebHocTap.Web.Common
+@using WebHocTap.Share.Extensions;
+@model WebHocTap.Web.Areas.Admin.Components.MainNavBar.NavBarViewModel
+@{
+    var currentControllerName = Context.Request.RouteValues["controller"].ToString();
+    string href = "";
+    string menuOpenClass = "";
+    string activeClass = "";
+    bool itemIsOpened;
+}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+    <div class="sidebar" style="height: calc(100vh - 200px)">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a asp-action="Index" asp-controller="Home" asp-area="null"
+                       class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <p class="text-nowrap">Trang client</p>
+                    </a>
+                </li>
+                @foreach (var item in Model.Items)
+                {
+                    if (!User.IsInPermission(item.Permission))
+                    {
+                        continue;
+                    }
+                    href = "#";
+                    if (!(item.Action + item.Controller).IsNullOrEmpty())
+                    {
+                        href = Url.Action(item.Action, item.Controller);
+                    }
+                    menuOpenClass = "";
+                    activeClass = "";
+
+                    itemIsOpened = item.ChildrenItems != null && item.ChildrenItems.Any(i => i.Controller == currentControllerName);
+                    if (itemIsOpened)
+                    {
+                        menuOpenClass = " menu-open";
+                        activeClass = " active";
+                    }
+                    else if (item.Controller == currentControllerName)
+                    {
+                        activeClass = " active";
+                    }
+
+                    <li class="nav-item@(menuOpenClass)">
+                        <a href="@href" class="nav-link@(activeClass)">
+                            <i class="nav-icon fas @item.Icon"></i>
+                            <p class="text-nowrap">
+                                @item.DisplayText
+                                @if (href == "#" && item.ChildrenItems != null)
+                                {
+                                    <i class="fas fa-angle-left right"></i>
+                                }
+                            </p>
+                        </a>
+                        @if (href == "#" && item.ChildrenItems != null)
+                        {
+                            <ul class="nav nav-treeview">
+                                @foreach (var sub in item.ChildrenItems)
+                                {
+                                    if (!User.IsInPermission(sub.Permission))
+                                    {
+                                        continue;
+                                    }
+                                    activeClass = sub.Controller == currentControllerName ? " active" : "";
+                                    <li class="nav-item">
+                                        <a asp-controller="@sub.Controller" asp-area="Admin" asp-action="@sub.Action" class="nav-link@(activeClass)">
+                                            <i class="fas nav-icon @sub.Icon ml-3"></i>
+                                            <p>@sub.DisplayText</p>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+
+                <li class="nav-item">
+                    <a asp-action="Logout" asp-controller="Account" asp-area=""
+                       class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <p class="text-nowrap">Đăng xuất</p>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+</aside>

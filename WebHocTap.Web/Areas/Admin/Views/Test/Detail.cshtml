@@ -1,0 +1,60 @@
+﻿@model WebHocTap.Web.Areas.Admin.ViewModels.TestandAnswer.DetailTest
+
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Detail">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Id" class="control-label"></label>
+                        <input asp-for="Id" class="form-control" readonly />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Question" class="control-label"></label>
+                        <input asp-for="Question" class="form-control" />
+                        <span asp-validation-for="Question" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </div>
+                <div class="col-md-6" id="list-answer">
+                    <button class="btn btn-outline-success show-listanswer" data-id="@Model.Id">Xem danh sách câu trả lời</button>
+                </div>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-times"></i></button>
+            </div>
+            <div class="modal-AddorUpdate">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-bs-dismiss="modal" class="btn btn-secondary js-close">Thoát</button>
+                <button type="button" class="btn btn-primary js-postdata">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/adminLTE/dist/js/test/detailtest.js" asp-append-version="true"></script>
+}

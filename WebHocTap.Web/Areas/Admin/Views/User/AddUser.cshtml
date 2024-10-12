@@ -1,0 +1,59 @@
+﻿@model WebHocTap.Web.Areas.Admin.ViewModels.User.AddUserVM
+
+@{
+    ViewData["Title"] = "Thêm tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddUser">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label">Tài khoản</label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label">Mật khẩu</label>
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ComformPassword" class="control-label">Nhập lại mật khẩu</label>
+                        <input asp-for="ComformPassword" type="password" class="form-control" />
+                        <span asp-validation-for="ComformPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Tạo tài khoản" class="btn btn-primary" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Gmail" class="control-label"></label>
+                        <input asp-for="Gmail" class="form-control" />
+                        <span asp-validation-for="Gmail" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber" class="control-label">Số điện thoại</label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IdRole" class="control-label"></label>
+                        <select asp-for="IdRole" class="form-control">
+                            <vc:list-role-view-components selected="null"></vc:list-role-view-components>
+                        </select>
+                        <span asp-validation-for="IdRole" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

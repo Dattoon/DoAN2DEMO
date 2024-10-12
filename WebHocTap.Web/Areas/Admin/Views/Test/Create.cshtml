@@ -1,0 +1,48 @@
+﻿@model WebHocTap.Web.Areas.Admin.ViewModels.TestandAnswer.AddorEditQAVM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Question" class="control-label"></label>
+                        <input asp-for="Question" class="form-control" />
+                        <span asp-validation-for="Question" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IdChapter" class="control-label"></label>
+                        <input asp-for="IdChapter" class="form-control" />
+                        <span asp-validation-for="IdChapter" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6" id="answer">
+                    <div class="form-group">
+                        <label asp-for="AnswerSucces" class="control-label">Câu trả lời đúng</label>
+                        <input asp-for="AnswerSucces" class="form-control" />
+                        <span asp-validation-for="AnswerSucces" class="text-danger"></span>
+                        <button class="btn btn-outline-success add-answer m-2">Thêm các câu trả lời phụ</button>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm câu hỏi" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section scripts{ 
+    <script src="~/adminLTE/dist/js/test/test.js" asp-append-version="true"></script>
+}

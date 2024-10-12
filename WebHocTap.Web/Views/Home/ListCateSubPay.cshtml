@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebHocTap.Data.Entites.CategorySub>
+
+@{
+    ViewData["Title"] = "ListCateSubPay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styleclient{
+    <link href="~/clientLTE/css/courses.css" rel="stylesheet" asp-append-version="true" />
+}
+<!-- Home -->
+<section id="home">
+    <h2>Danh sách khóa học có phí</h2>
+</section>
+<!-- Courses Prime -->
+<secion id="course">
+    <div class="course-title">
+        <h3 class="sub-title"><i class="fa fa-play-circle" aria-hidden="true"></i> Latest Prime Packs</h3>
+        <div class="text-right">
+            <a href="#" title="card view" class="btn-viewmore rounded"><i class="fa fa-sign-in" aria-hidden="true"></i> View More </a>
+        </div>
+    </div>
+    <div class="course-box1" id="paginated-list" data-current-page="1" aria-live="polite">
+        @foreach (var item in Model)
+        {
+        <li class="courses">
+            <img src="/img/categorysub/@item.pathImg" alt="">
+            <div class="details">
+                <span>Ngày tạo @item.CreateAt.ToDMY()</span>
+                <a asp-action="DetailsSubject" asp-controller="SubjectClient" asp-route-id="@item.Id"><h6>@item.NameCategorySub <i class="fa fa-lock" style="color: black;"></i> <i class="fa fa-check" style="color: green;"></i></h6></a>
+
+            </div>
+            <div class="cost">
+                @item.Price.Value.ToString("#,##0") VNĐ
+            </div>
+        </li>
+    }
+        </div>
+
+
+
+        <nav class="pagination-container">
+            <button class="pagination-button" id="prev-button" title="Previous page" aria-label="Previous page">
+                &lt;
+            </button>
+
+            <div id="pagination-numbers">
+            </div>
+
+            <button class="pagination-button" id="next-button" title="Next page" aria-label="Next page">
+                &gt;
+            </button>
+        </nav>
+    </secion>

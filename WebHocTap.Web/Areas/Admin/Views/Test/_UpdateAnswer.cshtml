@@ -1,0 +1,23 @@
+﻿@model WebHocTap.Web.Areas.Admin.ViewModels.TestandAnswer.UpdateAnswerVM
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="_UpdateAnswer" id="form-answer">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group" >
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Câu trả lời</label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

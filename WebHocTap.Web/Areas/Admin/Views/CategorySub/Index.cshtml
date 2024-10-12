@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebHocTap.Web.Areas.Admin.ViewModels.CategorySub.ListCategorySubItemVM>
+
+@{
+    ViewData["Title"] = "Danh sách danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (User.IsInPermission(AuthConst.CategorySub.CREATE))
+{
+    <div class="my-2">
+        <button type="button" class="btn btn-primary js-addorupdate" data-bs-toggle="modal" data-bs-target="#modal">
+            <i class="fas fa-plus-circle"></i> &nbsp; Thêm mới danh mục bài học
+        </button>
+    </div>
+}
+
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Thể loại tin tức</th>
+                <th>Giá</th>
+                <th>Ngày tạo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="fit">@item.Id</td>
+                    <td>@item.NameCategorySub</td>
+                    <td>@item.Price</td>
+                    <td class="fit">@item.CreateAt.ToDMYHM()</td>
+                    <td class="fit">
+                        @if (User.IsInPermission(AuthConst.CategorySub.DELETE))
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id"
+                               class="btn btn-outline-secondary btn-sm"><i class="fas fa-trash"></i></a>
+                        }
+                        @if (User.IsInPermission(AuthConst.CategorySub.UPDATE))
+                        {
+                            <button type="button" data-id="@item.Id" class="btn btn-outline-secondary btn-sm js-addorupdate" data-bs-toggle="modal" data-bs-target="#modal">
+                                <i class="fas fa-pen"></i>
+                            </button>
+
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<partial name="_Pager" />
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-times"></i></button>
+            </div>
+            <div class="modal-AddorUpdate">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-bs-dismiss="modal" class="btn btn-secondary js-close">Thoát</button>
+                <button type="button" class="btn btn-primary js-postdata">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/adminLTE/dist/js/categorySub/categorySub.js" asp-append-version="true"></script>
+}

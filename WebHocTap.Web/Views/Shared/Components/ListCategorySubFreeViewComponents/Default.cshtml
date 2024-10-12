@@ -1,0 +1,31 @@
+﻿@model IEnumerable<WebHocTap.Data.Entites.CategorySub>
+<!-- Courses -->
+<secion id="course">
+    <h1>Khóa học miễn phí</h1>
+    <div class="course-box">
+        @foreach (var item in Model)
+        {
+            <div class="courses mt-5">
+                <img src="/img/categorysub/@item.pathImg" style="width:300px;height:150px" alt="">
+                <div class="details">
+                    <span>Ngày tạo: @item.CreateAt.ToDMY()</span>
+                    <h6>@item.NameCategorySub <i class="fa fa-lock" style="color: black;"></i> <i class="fa fa-check" style="color: green;"></i></h6>
+                    <div class="star">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <span>(239)</span>
+                    </div>
+                </div>
+               
+                <div class="btn">
+                    <a asp-action="DetailsSubject" asp-controller="SubjectClient" asp-route-id="@item.Id" class="blue">Xem</a>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</secion>
