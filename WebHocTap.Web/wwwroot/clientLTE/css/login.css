@@ -4,6 +4,23 @@
     --bs-gutter-y: 1.5rem;
     --bs-gutter-x: 1.5rem;
 }
+.login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.container-row {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+}
+
 
 .main-login {
     --bs-bg-opacity: 1;

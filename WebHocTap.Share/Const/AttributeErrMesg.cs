@@ -8,6 +8,8 @@ namespace WebHocTap.Share.Const
 {
     public static class AttributeErrMesg
     {
+        //tuy chinh cac thong bao loi bang cac hang so 
+
         public const string CONFIRM_PWD = "Mật khẩu không khớp";
         public const string EMAIL = "Địa chỉ mail không hợp lệ";
         public const string MAXLEN = "Không được nhiều hơn {0} ký tự";

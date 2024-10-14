@@ -18,6 +18,13 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="message-container">
+        @if (TempData["Mesg"] != null)
+        {
+            <div class="alert alert-warning">@TempData["Mesg"]</div>
+        }
+    </div>
+
     <main class="main-login">
         <div class="login-box">
             <div class="login-row">
@@ -51,9 +58,7 @@
                                                             <span class="txtClass">
                                                                 <i class="fa fa-lock" aria-hidden="true"></i>
                                                             </span>
-                                                            <span class="togglePassword" style="text-align:right;">
-                                                                <i class="fa fa-fw fa-eye-slash"></i>
-                                                            </span>
+                                                           
                                                             <input type="password" asp-for="Password" class="inputLogin txtClass form-control" id="user-password" placeholder=" Password">
                                                         </div>
                                                     </div>
@@ -62,9 +67,7 @@
                                                             <span class="txtClass">
                                                                 <i class="fa fa-lock" aria-hidden="true"></i>
                                                             </span>
-                                                            <span class="togglePassword" style="text-align:right;">
-                                                                <i class="fa fa-fw fa-eye-slash"></i>
-                                                            </span>
+                                                          
                                                             <input type="password" asp-for="ComformPassword" class="inputLogin txtClass form-control" id="user-password" placeholder="Confirm Password">
                                                         </div>
                                                     </div>
