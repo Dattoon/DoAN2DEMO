@@ -1,20 +1,17 @@
 ﻿@model IEnumerable<WebHocTap.Web.Areas.Admin.ViewModels.User.ListUserItemVM>
-
 @{
     ViewData["Title"] = "Danh sách tài khoản";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-
 @if (User.IsInPermission(AuthConst.User.CREATE))
 {
     <div class="my-2">
         <a asp-action="AddUser" asp-controller="User" asp-area="Admin" class="btn btn-primary">
-            <i class="fas fa-plus-circle"></i> &nbsp; Thêm mới vai trò
+            <i class="fas fa-plus-circle"></i> &nbsp; Thêm mới tài khoản
         </a>
     </div>
 }
-
 
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
@@ -24,7 +21,7 @@
                 <th>Tên tài khoản</th>
                 <th>Quyền trên trang</th>
                 <th>Ngày tạo</th>
-                <th></th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -38,13 +35,12 @@
                     <td class="fit">
                         @if (User.IsInPermission(AuthConst.User.DELETE))
                         {
-                            <a asp-action="Delete" asp-route-id="@item.Id"
+                            <a asp-action="DeleteUser" asp-route-id="@item.Id"
                                class="btn btn-outline-secondary btn-sm"><i class="fas fa-trash"></i></a>
                         }
                         @if (User.IsInPermission(AuthConst.User.UPDATE))
                         {
-
-                            <a asp-action="UpdateRole" asp-route-id="@item.Id"
+                            <a asp-action="EditUser" asp-route-id="@item.Id"
                                class="btn btn-outline-secondary btn-sm"><i class="fas fa-pen"></i></a>
                         }
                     </td>
@@ -53,4 +49,5 @@
         </tbody>
     </table>
 </div>
+
 <partial name="_Pager" />

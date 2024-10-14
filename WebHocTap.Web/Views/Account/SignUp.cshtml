@@ -18,14 +18,11 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="message-container">
-        @if (TempData["Mesg"] != null)
-        {
-            <div class="alert alert-warning">@TempData["Mesg"]</div>
-        }
-    </div>
+   
 
     <main class="main-login">
+        
+
         <div class="login-box">
             <div class="login-row">
                 <div class="login-bg"></div>
@@ -35,7 +32,14 @@
                             <div class="container-col">
                                 <div class="container-row">
                                     <div class="box">
+                                        <div id="message-container">
+                                            @if (TempData["Mesg"] != null)
+                                            {
+                                                <div class="alert alert-warning">@TempData["Mesg"]</div>
+                                            }
+                                        </div>
                                         <div class="card">
+                                           
                                             <h1 class="text-title">
                                                 <a href="index.html">
                                                     <img src="/clientLTE/images/logo.png" alt="">
@@ -43,6 +47,7 @@
                                                 <a href="" class="closeDiv" title="close window"><i class="fal fa-xmark-large"></i></a>
                                             </h1>
                                             <div class="clear"></div>
+                                          
                                             <div class="divLogin">
                                                 <form asp-action="SignUp" method="post" class="loginForm" id="loginForm" novalidate="novalidate">
                                                     <div class="input-box">

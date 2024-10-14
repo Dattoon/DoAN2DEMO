@@ -17,6 +17,8 @@
 </head>
 <body>
     <main class="main-login">
+      
+
         <div class="login-box">
             <div class="login-row">
                 <div class="login-bg"></div>
@@ -27,6 +29,12 @@
                                 <div class="container-row">
                                     <div class="box">
                                         <div class="card">
+                                            <div id="message-container">
+                                                @if (TempData["Mesg"] != null)
+                                                {
+                                                    <div class="alert alert-warning">@TempData["Mesg"]</div>
+                                                }
+                                            </div>
                                             <h1 class="text-title">
                                                 <a href="index.html">
                                                     <img src="/clientLTE/images/logo.png" alt="">
