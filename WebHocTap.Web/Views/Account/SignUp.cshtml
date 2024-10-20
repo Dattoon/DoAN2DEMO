@@ -14,18 +14,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
-    <link href="~/clientLTE/css/login.css" rel="stylesheet" />
+    <link href="~/clientLTE/css/login.css" rel="stylesheet" asp-append-version="true" />
     <title>Document</title>
 </head>
 <body>
-   
-
     <main class="main-login">
-        
-
         <div class="login-box">
             <div class="login-row">
-                <div class="login-bg"></div>
+                <div class="login-background"></div>
                 <section class="login-section">
                     <div class="login-box">
                         <div class="container-row">
@@ -39,15 +35,13 @@
                                             }
                                         </div>
                                         <div class="card">
-                                           
                                             <h1 class="text-title">
-                                                <a href="index.html">
+                                                <a asp-action="Index" asp-controller="Home">
                                                     <img src="/clientLTE/images/logo.png" alt="">
                                                 </a>
                                                 <a href="" class="closeDiv" title="close window"><i class="fal fa-xmark-large"></i></a>
                                             </h1>
                                             <div class="clear"></div>
-                                          
                                             <div class="divLogin">
                                                 <form asp-action="SignUp" method="post" class="loginForm" id="loginForm" novalidate="novalidate">
                                                     <div class="input-box">
@@ -63,7 +57,7 @@
                                                             <span class="txtClass">
                                                                 <i class="fa fa-lock" aria-hidden="true"></i>
                                                             </span>
-                                                           
+
                                                             <input type="password" asp-for="Password" class="inputLogin txtClass form-control" id="user-password" placeholder=" Password">
                                                         </div>
                                                     </div>
@@ -72,7 +66,6 @@
                                                             <span class="txtClass">
                                                                 <i class="fa fa-lock" aria-hidden="true"></i>
                                                             </span>
-                                                          
                                                             <input type="password" asp-for="ComformPassword" class="inputLogin txtClass form-control" id="user-password" placeholder="Confirm Password">
                                                         </div>
                                                     </div>
@@ -81,7 +74,7 @@
                                                             <span class="txtClass">
                                                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                                                             </span>
-                                                                <input asp-for="Gmail" class="inputLogin txtClass form-control" id="user-password" placeholder="Gmail">
+                                                            <input asp-for="Gmail" class="inputLogin txtClass form-control" id="user-password" placeholder="Gmail">
                                                         </div>
                                                     </div>
                                                     <div class="input-box">
@@ -94,7 +87,7 @@
                                                     </div>
                                                     <div class="clear"></div>
 
-                                                    
+
 
                                                     <div class="loginSubmit">
                                                         <div class="Submit-btn">
@@ -103,7 +96,7 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
