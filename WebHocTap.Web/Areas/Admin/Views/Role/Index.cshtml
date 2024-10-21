@@ -1,11 +1,8 @@
 ﻿@model IEnumerable<WebHocTap.Web.Areas.Admin.ViewModels.Role.ListRoleItemVM>
-
 @{
     ViewData["Title"] = "Danh sách quyền";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
-
 @if (User.IsInPermission(AuthConst.Role.CREATE))
 {
     <div class="my-2">
@@ -14,8 +11,6 @@
         </a>
     </div>
 }
-
-
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <thead>
@@ -38,14 +33,17 @@
                     <td class="fit">
                         @if (User.IsInPermission(AuthConst.Role.DELETE))
                         {
-                            <a asp-action="Delete" asp-route-id="@item.Id"
-                               class="btn btn-outline-secondary btn-sm"><i class="fas fa-trash"></i></a>
+                            <form asp-action="DeleteRole" asp-route-id="@item.Id" method="post" style="display: inline-block;">
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
                         }
                         @if (User.IsInPermission(AuthConst.Role.UPDATE))
                         {
-
-                            <a asp-action="UpdateRole" asp-route-id="@item.Id"
-                               class="btn btn-outline-secondary btn-sm"><i class="fas fa-pen"></i></a>
+                            <a asp-action="UpdateRole" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm" style="display: inline-block;">
+                                <i class="fas fa-pen"></i>
+                            </a>
                         }
                     </td>
                 </tr>

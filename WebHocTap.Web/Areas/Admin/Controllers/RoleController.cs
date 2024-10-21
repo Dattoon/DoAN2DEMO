@@ -85,5 +85,24 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
             }
             return View(data);
         }
+
+        [HttpPost]
+        [AppAuthorize(AuthConst.Role.DELETE)]
+        public async Task<IActionResult> DeleteRole(int id)
+        {
+            try
+            {
+                await _repo.HardDeleteAsync<Role>(id);
+                SetSuccessMesg("Xóa vai trò thành công");
+            }
+            catch (Exception ex)
+            {
+                SetErrorMesg("Có lỗi xảy ra khi xóa vai trò");
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
     }
 }
