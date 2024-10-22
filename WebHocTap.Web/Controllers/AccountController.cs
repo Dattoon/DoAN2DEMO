@@ -30,7 +30,7 @@ namespace WebHocTap.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                SetErrorMesg("Dữ liệu không hợp lệ vui lòng kiểm tra lại!");
+                TempData["Mesg"] = "Dữ liệu không hợp lệ vui lòng kiểm tra lại!";              
                 return View(model);
             }
 
@@ -38,7 +38,8 @@ namespace WebHocTap.Web.Controllers
 
             if (await _repo.AnyAsync<User>(x => x.UserName == model.UserName))
             {
-                SetErrorMesg("Tên đăng nhập đã tồn tại vui lòng kiểm tra lại!");
+                TempData["Mesg"] = "Tên đăng nhập đã tồn tại vui lòng kiểm tra lại!";
+               
                 return View(model);
             }
 
