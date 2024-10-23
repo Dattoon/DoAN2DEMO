@@ -17,11 +17,8 @@
                         <input asp-for="Question" class="form-control" />
                         <span asp-validation-for="Question" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="IdChapter" class="control-label"></label>
-                        <input asp-for="IdChapter" class="form-control" />
-                        <span asp-validation-for="IdChapter" class="text-danger"></span>
-                    </div>
+                    <!-- Trường IdChapter ẩn -->
+                    <input type="hidden" asp-for="IdChapter" />
                 </div>
                 <div class="col-md-6" id="answer">
                     <div class="form-group">
@@ -30,13 +27,13 @@
                         <span asp-validation-for="AnswerSucces" class="text-danger"></span>
                         <button class="btn btn-outline-success add-answer m-2">Thêm các câu trả lời phụ</button>
                     </div>
-                    
                 </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Thêm câu hỏi" class="btn btn-primary" />
             </div>
         </form>
+
     </div>
 </div>
 

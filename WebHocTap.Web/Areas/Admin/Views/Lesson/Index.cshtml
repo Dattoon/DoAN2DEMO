@@ -4,6 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     int index = 1; // Khởi tạo biến đếm
 }
+
 @if (User.IsInPermission(AuthConst.Lesson.CREATE))
 {
     <div class="my-2">
@@ -20,6 +21,7 @@
         </a>
     </div>
 }
+
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <thead>
@@ -50,7 +52,7 @@
                         }
                         @if (User.IsInPermission(AuthConst.Lesson.VIEW_DETAIL))
                         {
-                            <a asp-action="Index" asp-controller="Test" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
+                            <a asp-action="Detail" asp-controller="Lesson" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
                         }
@@ -61,4 +63,5 @@
         </tbody>
     </table>
 </div>
+
 <partial name="_Pager" />
