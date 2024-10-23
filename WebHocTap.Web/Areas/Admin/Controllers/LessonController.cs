@@ -77,5 +77,18 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
             SetSuccessMesg("Thêm thành công");
             return RedirectToAction("Index", new { id = data.IdChapter });
         }
+        [AppAuthorize(AuthConst.Lesson.VIEW_DETAIL)]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var data = await _repo.GetOneAsync<Lesson, AddorUpdateLessonVM>(id, l => new AddorUpdateLessonVM
+            {
+                Id = l.Id,
+                IdChapter = l.IdChapter,
+                Content = l.Content,
+                Video = l.Video,
+            });
+            return View(data);
+        }
+
     }
 }

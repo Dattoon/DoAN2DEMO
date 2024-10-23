@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<WebHocTap.Web.Areas.Admin.ViewModels.Sub.ListSubItemVM>
-
 @{
     ViewData["Title"] = "Danh sách môn học";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int index = 1; // Khởi tạo biến đếm
 }
-
-
 @if (User.IsInPermission(AuthConst.Subject.CREATE))
 {
     <div class="my-2">
@@ -27,10 +25,8 @@
                 <button class="btn btn-outline-info"><i class="fa fa-search" aria-hidden="true"></i></button>
             </div>
         </div>
-        
     </form>
 </div>
-
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <thead>
@@ -46,15 +42,16 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td class="fit">@item.Id</td>
+                    <td class="fit">@index</td> <!-- Hiển thị số thứ tự -->
                     <td>@item.NameSubject</td>
                     <td>@item.CategorySub</td>
                     <td class="fit">@item.CreateAt.ToDMYHM()</td>
                     <td class="fit">
                         @if (User.IsInPermission(AuthConst.Subject.DELETE))
                         {
-                            <a asp-action="Delete" asp-route-id="@item.Id"
-                               class="btn btn-outline-secondary btn-sm"><i class="fas fa-trash"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         }
                         @if (User.IsInPermission(AuthConst.Subject.UPDATE))
                         {
@@ -64,11 +61,13 @@
                         }
                         @if (User.IsInPermission(AuthConst.Subject.VIEW_DETAIL))
                         {
-                            <a asp-action="Index" asp-controller="Chapter" asp-area="Admin" asp-route-id="@item.Id"
-                               class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-eye"></i></a>
+                            <a asp-action="Index" asp-controller="Chapter" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
                         }
                     </td>
                 </tr>
+                index++; // Tăng biến đếm
             }
         </tbody>
     </table>
@@ -79,10 +78,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-times"></i></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fal fa-times"></i>
+                </button>
             </div>
             <div class="modal-AddorUpdate">
-
             </div>
             <div class="modal-footer">
                 <button type="button" data-bs-dismiss="modal" class="btn btn-secondary js-close">Thoát</button>
@@ -91,6 +91,6 @@
         </div>
     </div>
 </div>
-@section scripts{
+@section scripts {
     <script src="~/adminLTE/dist/js/Subject/subject.js" asp-append-version="true"></script>
 }

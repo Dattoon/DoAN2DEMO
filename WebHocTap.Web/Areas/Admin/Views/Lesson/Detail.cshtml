@@ -1,0 +1,38 @@
+﻿@model WebHocTap.Web.Areas.Admin.ViewModels.Lesson.AddorUpdateLessonVM
+
+@{
+    ViewData["Title"] = "Chi tiết bài học";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết bài học</h2>
+
+<div>
+    <h4>@Model.Id</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            IdChapter
+        </dt>
+        <dd class="col-sm-10">
+            @Model.IdChapter
+        </dd>
+        <dt class="col-sm-2">
+            Content
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Raw(Model.Content)
+        </dd>
+        <dt class="col-sm-2">
+            Video
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Video
+        </dd>
+        <!-- Thêm các thuộc tính khác nếu cần -->
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Trở lại danh sách</a>
+</div>

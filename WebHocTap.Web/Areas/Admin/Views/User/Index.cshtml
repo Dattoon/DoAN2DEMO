@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Danh sách tài khoản";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int index = 1; // Khởi tạo biến đếm
 }
 
 @if (User.IsInPermission(AuthConst.User.CREATE))
@@ -28,7 +29,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td class="fit">@item.Id</td>
+                    <td class="fit">@index</td> <!-- Hiển thị số thứ tự -->
                     <td>@item.UserName</td>
                     <td>@item.RoleName</td>
                     <td class="fit">@item.CreateAt.ToDMYHM()</td>
@@ -45,6 +46,7 @@
                         }
                     </td>
                 </tr>
+                index++; // Tăng biến đếm
             }
         </tbody>
     </table>
