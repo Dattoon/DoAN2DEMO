@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<WebHocTap.Web.Areas.Admin.ViewModels.Chapter.ListChapterItemVM>
-
 @{
     ViewData["Title"] = "Danh sách chương";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int index = 1; // Khởi tạo biến đếm
 }
-
-
 @if (User.IsInPermission(AuthConst.Chapter.CREATE))
 {
     <div class="my-2">
@@ -14,8 +12,6 @@
         </a>
     </div>
 }
-
-
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <thead>
@@ -30,31 +26,33 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td class="fit">@item.Id</td>
+                    <td class="fit">@index</td> <!-- Hiển thị số thứ tự -->
                     <td>@item.NameChapter</td>
                     <td class="fit">@item.CreateAt.ToDMYHM()</td>
                     <td class="fit">
                         @if (User.IsInPermission(AuthConst.Chapter.DELETE))
                         {
-                            <a asp-action="Delete" asp-route-id="@item.Id"
-                               class="btn btn-outline-secondary btn-sm"><i class="fas fa-trash"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         }
                         @if (User.IsInPermission(AuthConst.Chapter.UPDATE))
                         {
-
-                            <a asp-action="Update" asp-route-id="@item.Id"
-                               class="btn btn-outline-secondary btn-sm"><i class="fas fa-pen"></i></a>
+                            <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-pen"></i>
+                            </a>
                         }
                         @if (User.IsInPermission(AuthConst.Subject.VIEW_DETAIL))
                         {
-                            <a asp-action="Index" asp-controller="Lesson" asp-area="Admin" asp-route-id="@item.Id"
-                               class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-eye"></i></a>
+                            <a asp-action="Index" asp-controller="Lesson" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
                         }
                     </td>
                 </tr>
+                index++; // Tăng biến đếm
             }
         </tbody>
     </table>
 </div>
 <partial name="_Pager" />
-

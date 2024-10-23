@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<WebHocTap.Web.Areas.Admin.ViewModels.CategorySub.ListCategorySubItemVM>
-
 @{
     ViewData["Title"] = "Danh sách danh mục";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int index = 1; // Khởi tạo biến đếm
 }
-
-
 @if (User.IsInPermission(AuthConst.CategorySub.CREATE))
 {
     <div class="my-2">
@@ -14,8 +12,6 @@
         </button>
     </div>
 }
-
-
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <thead>
@@ -31,26 +27,26 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td class="fit">@item.Id</td>
+                    <td class="fit">@index</td> <!-- Hiển thị số thứ tự -->
                     <td>@item.NameCategorySub</td>
                     <td>@item.Price</td>
                     <td class="fit">@item.CreateAt.ToDMYHM()</td>
                     <td class="fit">
                         @if (User.IsInPermission(AuthConst.CategorySub.DELETE))
                         {
-                            <a asp-action="Delete" asp-route-id="@item.Id"
-                               class="btn btn-outline-secondary btn-sm"><i class="fas fa-trash"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         }
                         @if (User.IsInPermission(AuthConst.CategorySub.UPDATE))
                         {
                             <button type="button" data-id="@item.Id" class="btn btn-outline-secondary btn-sm js-addorupdate" data-bs-toggle="modal" data-bs-target="#modal">
                                 <i class="fas fa-pen"></i>
                             </button>
-
                         }
-
                     </td>
                 </tr>
+                index++; // Tăng biến đếm
             }
         </tbody>
     </table>
@@ -61,10 +57,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-times"></i></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fal fa-times"></i>
+                </button>
             </div>
             <div class="modal-AddorUpdate">
-
             </div>
             <div class="modal-footer">
                 <button type="button" data-bs-dismiss="modal" class="btn btn-secondary js-close">Thoát</button>
@@ -73,6 +70,6 @@
         </div>
     </div>
 </div>
-@section scripts{
+@section scripts {
     <script src="~/adminLTE/dist/js/categorySub/categorySub.js" asp-append-version="true"></script>
 }

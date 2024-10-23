@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Danh sách thể loại tin tức";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int index = 1; // Khởi tạo biến đếm
 }
 
 
@@ -30,7 +31,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td class="fit">@item.Id</td>
+                    <td class="fit">@index</td> <!-- Sử dụng ViewBag.Index -->
                     <td>@item.NameCategoryNew</td>
                     <td class="fit">@item.CreateAt.ToDMYHM()</td>
                     <td class="fit">
@@ -48,6 +49,7 @@
                         }
                     </td>
                 </tr>
+                index++; // Tăng biến đếm
             }
         </tbody>
     </table>
