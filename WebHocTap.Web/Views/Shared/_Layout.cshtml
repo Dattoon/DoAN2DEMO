@@ -16,33 +16,30 @@
 
     <!-- Navigation -->
 
-    <nav>
-        <a asp-action="Index" asp-controller="Home">
-            <img src="" alt="">
+    <nav class="main-nav">
+        <a asp-action="Index" asp-controller="Home" class="logo">
+            <img src="" alt="Logo">
         </a>
         <form class="form-inline mr-auto" target="_self">
             <div class="form-group">
                 <input class="form-control search-field" type="search" name="search" id="search-field" placeholder="Search">
             </div>
         </form>
-
-        <div class="nagivation">
-            <ul>
-                <i id="menu-close" class="fas fa-times"></i>
-                <li class="pr-3"><a asp-action="Index" asp-controller="NewsClient"><i class="fas fa-newspaper"></i> Tin tức</a></li>
-                <div class="dropdown p-1">
+        <div class="navigation">
+            <ul class="nav-list">
+                <li class="nav-item"><a asp-action="Index" asp-controller="NewsClient"><i class="fas fa-newspaper"></i> Tin tức</a></li>
+                <li class="nav-item dropdown p-1">
                     <button class="dropbtn">
                         <i class="fa fa-th" aria-hidden="true"></i> Khóa học <i class="fa fa-angle-down" aria-hidden="true"></i>
                     </button>
                     <div class="dropdown-content">
-                        <a asp-action="ListCateSubFree" asp-controller="Home">Khóa học miễn phí</a>
-                        <a asp-action="ListCateSubPay" asp-controller="Home"> Khóa học trả phí</a>
+                        <a asp-action="ListCateSubFree" asp-controller="Home" class="dropdown-item">Khóa học miễn phí</a>
+                        <a asp-action="ListCateSubPay" asp-controller="Home" class="dropdown-item">Khóa học trả phí</a>
                     </div>
-                </div>
-
+                </li>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <div class="dropdown">
+                    <li class="nav-item dropdown">
                         <button class="dropbtn">
                             <i class="fa fa-th" aria-hidden="true"></i> Xin chào @User.Identity.Name <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </button>
@@ -55,21 +52,21 @@
                             <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Auth" asp-route-id="@Convert.ToInt32(User.Claims.SingleOrDefault(c => c.Type.Contains(System.Security.Claims.ClaimTypes.NameIdentifier))?.Value)">Đổi mật khẩu</a>
                             <a asp-action="Logout" asp-controller="Account" class="dropdown-item">Đăng xuất</a>
                         </div>
-                    </div>
+                    </li>
                 }
                 else
                 {
-                    <div class="btn">
+                    <li class="nav-item btn">
                         <a asp-action="Login" asp-controller="Account" id="login">Đăng nhập</a>
-                    </div>
+                    </li>
                 }
-
-
             </ul>
-
-            <img id="menu-btn" src="images/menu.png" alt="">
+            <img id="menu-btn" src="images/menu.png" alt="Menu">
         </div>
     </nav>
+
+
+
     <!-- Home -->
     
 
