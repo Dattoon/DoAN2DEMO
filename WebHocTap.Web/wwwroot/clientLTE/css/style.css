@@ -44,9 +44,7 @@ nav {
     }
 
     nav .form-group {
-        border: 1px solid #101c32;
-        border-radius: 5px;
-        color: #fff;
+
     }
 
         nav .form-group input {
@@ -884,3 +882,129 @@ footer {
             margin-bottom: 20px;
         }
 }
+
+
+/*header*/
+nav.main-nav {
+    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+nav .logo {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+}
+
+.nav-item {
+    margin: 0 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+    nav a:hover {
+        color: #ffdd57;
+    }
+
+nav .form-inline {
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+.form-control.search-field {
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    width: 100%;
+    margin-left: 30px;
+    transition: box-shadow 0.3s;
+}
+
+    .form-control.search-field:focus {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        outline: none;
+    }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #6a11cb;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+    .dropbtn:hover {
+        background-color: #2575fc;
+    }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s;
+    }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropbtn i {
+    margin-left: 8px;
+}
+
+.btn #login {
+    color: white;
+    border: 2px solid white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .btn #login:hover {
+        background-color: white;
+        color: #6a11cb;
+    }
