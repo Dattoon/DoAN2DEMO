@@ -28,22 +28,29 @@ namespace WebHocTap.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpVM model)
         {
+            // Thiết lập giá trị mặc định cho AvatarUrl trước khi kiểm tra ModelState
+            if (string.IsNullOrEmpty(model.AvatarUrl))
+            {
+                model.AvatarUrl = "default-avatar-url";
+            }
+
             if (!ModelState.IsValid)
             {
-                TempData["Mesg"] = "Dữ liệu không hợp lệ vui lòng kiểm tra lại!";              
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error); // Log lỗi ra console hoặc log vào file
+                }
+                TempData["Mesg"] = "Dữ liệu không hợp lệ vui lòng kiểm tra lại!";
                 return View(model);
             }
 
             model.UserName = model.UserName.ToLower();
-
             if (await _repo.AnyAsync<User>(x => x.UserName == model.UserName))
             {
                 TempData["Mesg"] = "Tên đăng nhập đã tồn tại vui lòng kiểm tra lại!";
-               
                 return View(model);
             }
-
-            
 
             var hashResult = HashHMACSHA512(model.Password);
             model.PasswordHash = hashResult.Value;
@@ -53,16 +60,19 @@ namespace WebHocTap.Web.Controllers
             {
                 var user = _mapper.Map<User>(model);
                 user.IdRole = 2;
-                user.AvatarUrl = "default-avatar-url";
                 await _repo.AddAsync(user);
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
                 // Log exception here
+                Console.WriteLine(ex.Message);
                 return View(model);
             }
         }
+
+
+
 
         public IActionResult Login() => PartialView();
 
