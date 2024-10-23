@@ -53,6 +53,7 @@ namespace WebHocTap.Web.Controllers
             {
                 var user = _mapper.Map<User>(model);
                 user.IdRole = 2;
+                user.AvatarUrl = "default-avatar-url";
                 await _repo.AddAsync(user);
                 return RedirectToAction("Index", "Home");
             }
@@ -69,9 +70,8 @@ namespace WebHocTap.Web.Controllers
         public async Task<IActionResult> Login(LoginClientVM model)
         {
             var user = await _repo.GetOneAsync<User, UserDataForApp>(
-                where: x => x.UserName == model.UserName.ToLower(),
-                MapperConfig.LoginConf
-            );
+                x => x.UserName == model.UserName.ToLower(),
+                MapperConfig.LoginConf);
 
             if (user == null)
             {
@@ -80,7 +80,6 @@ namespace WebHocTap.Web.Controllers
             }
 
             var pwdHash = HashHMACSHA512WithKey(model.Password, user.PasswordSalt);
-
             if (!pwdHash.SequenceEqual(user.PasswordHash))
             {
                 TempData["Mesg"] = "Tên đăng nhập hoặc mật khẩu không chính xác";
@@ -88,15 +87,16 @@ namespace WebHocTap.Web.Controllers
             }
 
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Gmail),
-                new Claim(AppClaimType.PhoneNumber, user.PhoneNumber),
-                new Claim(AppClaimType.RoleName, user.RoleName),
-                new Claim(AppClaimType.RoleId, user.RoleId.ToString()),
-                new Claim(AppClaimType.Permissions, user.Permission),
-            };
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
+        new Claim(ClaimTypes.Email, user.Gmail ?? string.Empty),
+        new Claim(AppClaimType.PhoneNumber, user.PhoneNumber ?? string.Empty),
+        new Claim(AppClaimType.RoleName, user.RoleName ?? string.Empty),
+        new Claim(AppClaimType.RoleId, user.RoleId.ToString()),
+        new Claim(AppClaimType.Permissions, user.Permission ?? string.Empty),
+        new Claim("AvatarUrl", user.AvatarUrl ?? string.Empty)
+    };
 
             var claimsIdentity = new ClaimsIdentity(claims, AppConst.COOKIES_AUTH);
             var principal = new ClaimsPrincipal(claimsIdentity);
@@ -110,6 +110,51 @@ namespace WebHocTap.Web.Controllers
             SetSuccessMesg("Đăng nhập thành công");
             return RedirectToAction(nameof(Index), "Home");
         }
+
+
+        public IActionResult UpdateProfile(int id)
+        {
+            var user = _repo.GetOneAsync<User>(x => x.Id == id).Result;
+            if (user == null) return NotFound();
+
+            var model = new ProfileUpdateVM
+            {
+                UserId = user.Id,
+                Gmail = user.Gmail,
+                PhoneNumber = user.PhoneNumber,
+                AvatarUrl = user.AvatarUrl
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfile(ProfileUpdateVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Mesg"] = "Dữ liệu không hợp lệ";
+                return View(model);
+            }
+
+            var user = await _repo.GetOneAsync<User>(x => x.Id == model.UserId);
+            if (user == null)
+            {
+                TempData["Mesg"] = "Người dùng không tồn tại";
+                return View(model);
+            }
+
+            user.Gmail = model.Gmail;
+            user.PhoneNumber = model.PhoneNumber;
+            user.AvatarUrl = model.AvatarUrl;
+
+            await _repo.UpdateAsync(user);
+
+            TempData["Mesg"] = "Cập nhật hồ sơ thành công";
+            return RedirectToAction("Profile", new { id = user.Id });
+        }
+
+
 
         public async Task<IActionResult> Logout()
         {

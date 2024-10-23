@@ -36,6 +36,8 @@ namespace WebHocTap.Data.DataSender
                     UpdateAt = now,
                     CreateAt = now,
                     IdRole = 1,              // Vai trò được tạo ở AppRoleSeeder
+
+                    AvatarUrl = "default-avatar-url"
                 }
             );
         }

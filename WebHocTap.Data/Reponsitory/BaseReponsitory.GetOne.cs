@@ -100,19 +100,28 @@ namespace WebHocTap.Data.Reponsitory
         }
 
         public virtual async Task<TViewModel> GetOneAsync<TEntity, TViewModel>(
-            Expression<Func<TEntity, bool>> where,
-            MapperConfiguration mapperConfig,
-            bool selectFromTrash = false)
-            where TEntity : BaseEntitty
+     Expression<Func<TEntity, bool>> where,
+     MapperConfiguration mapperConfig,
+     bool selectFromTrash = false)
+     where TEntity : BaseEntitty
         {
             var defaultWhere = GetDefaultWhereExpr<TEntity>(selectFromTrash);
             var query = _db.Set<TEntity>()
-                        .AsNoTracking()
-                        .Where(defaultWhere)
-                        .Where(where)
-                        .ProjectTo<TViewModel>(mapperConfig);
+                           .AsNoTracking()
+                           .Where(defaultWhere)
+                           .Where(where)
+                           .ProjectTo<TViewModel>(mapperConfig);
+
             LogDebugQuery(query);
-            return await query.SingleOrDefaultAsync();
+            var result = await query.SingleOrDefaultAsync();
+
+            if (result == null)
+            {
+                // Handle the null value appropriately, for example, return a default instance or handle error
+                return default;
+            }
+
+            return result;
         }
 
         public virtual async Task<TViewModel> GetOneAsync<TEntity, TViewModel>(
@@ -123,12 +132,24 @@ namespace WebHocTap.Data.Reponsitory
         {
             var defaultWhere = GetDefaultWhereExpr<TEntity>(selectFromTrash);
             var query = _db.Set<TEntity>()
-                        .AsNoTracking()
-                        .Where(defaultWhere)
-                        .Where(where)
-                        .Select(selector);
+                           .AsNoTracking()
+                           .Where(defaultWhere)
+                           .Where(where)
+                           .Select(selector);
+
             LogDebugQuery(query);
-            return await query.SingleOrDefaultAsync();
+            var result = await query.SingleOrDefaultAsync();
+
+            if (result == null)
+            {
+                // Handle the null value appropriately, for example, return a default instance or handle error
+                return default;
+            }
+
+            return result;
         }
+
+
+
     }
 }

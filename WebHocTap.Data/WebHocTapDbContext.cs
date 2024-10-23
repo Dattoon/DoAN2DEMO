@@ -2,21 +2,15 @@
 using WebHocTap.Data.DataSender;
 using WebHocTap.Data.Entites;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WebHocTap.Data
 {
-    public class WebHocTapDbContext :DbContext
+    public class WebHocTapDbContext : DbContext
     {
         public WebHocTapDbContext(DbContextOptions options) : base(options)
         {
-
         }
+
         public DbSet<Answer> answers { get; set; }
         public DbSet<CategoryNew> categoryNews { get; set; }
         public DbSet<CategorySub> categorySubs { get; set; }
@@ -32,10 +26,11 @@ namespace WebHocTap.Data
         public DbSet<Test> tests { get; set; }
         public DbSet<User> users { get; set; }
         public DbSet<PurchasedCourse> purchasedCourses { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AnswerConfig());
@@ -49,7 +44,8 @@ namespace WebHocTap.Data
             modelBuilder.ApplyConfiguration(new TestConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
             modelBuilder.ApplyConfiguration(new PurchasedCourseConfig());
-            //tạo dữ liệu
+
+            // Tạo dữ liệu seed
             modelBuilder.Entity<MstPerMission>().SeedData();
             modelBuilder.Entity<Role>().SeedData();
             modelBuilder.Entity<User>().SeedData();

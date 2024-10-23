@@ -1,0 +1,18 @@
+﻿@model WebHocTap.Web.ViewModels.Account.ProfileUpdateVM
+
+<form asp-action="UpdateProfile" method="post">
+    <input asp-for="UserId" type="hidden" />
+    <div>
+        <label asp-for="Gmail">Email</label>
+        <input asp-for="Gmail" />
+    </div>
+    <div>
+        <label asp-for="PhoneNumber">Số điện thoại</label>
+        <input asp-for="PhoneNumber" />
+    </div>
+    <div>
+        <label asp-for="AvatarUrl">URL Avatar</label>
+        <input asp-for="AvatarUrl" />
+    </div>
+    <button type="submit">Cập nhật hồ sơ</button>
+</form>
