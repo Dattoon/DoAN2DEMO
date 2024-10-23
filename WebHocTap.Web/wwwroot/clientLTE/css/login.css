@@ -1,156 +1,80 @@
-﻿:root {
-    --bs-ligt-rgb: 245,247,249;
-    --bs-secondary-rgb: 154,158,164;
-    --bs-gutter-y: 1.5rem;
-    --bs-gutter-x: 1.5rem;
-}
-
-.text-title {
-    text-align: center;
-    margin: 0.5rem 0;
-    font-size: 2.2rem;
-    position: relative;
-}
-
-    .text-title a {
-        display: inline-block;
-    }
-
-        .text-title a img {
-            max-width: 200px;
-        }
-
-    .text-title .closeDiv {
-        font-size: 15px;
-        color: #f00 !important;
-        position: absolute;
-        right: 20px;
-        top: 15px;
-        text-decoration: none;
-    }
-
-.main-login {
-    --bs-bg-opacity: 1;
-    background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity)) !important;
-    padding-bottom: 1.6rem;
+﻿/* General styles */
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background: url('/clientLTE/images/background.png') no-repeat center center fixed;
+    background-size: cover;
 }
 
-.login-box {
-    width: 80%;
-    margin: 1rem auto;
-    padding: 1rem;
-    background: #fff;
+.card {
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.login-background {
-    flex-shrink: 0;
+    padding: 30px;
     width: 100%;
-    max-width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: -25px;
-    left: 0;
-    z-index: 0;
-    background-size: cover;
-    background-image: url('/clientLTE/images/15.jpg');
-
-    /*Chỉnh hình background thì chỉnh chổ này*/
+    max-width: 450px;
+    backdrop-filter: blur(10px);
 }
 
-.login-section {
-    flex-shrink: 0;
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
+.text-title {
+    text-align: center;
+}
+
+.input-box {
     position: relative;
-    padding: 2.5rem 0.5rem 1.8rem 0.5rem;
+    margin-bottom: 20px;
 }
 
-.divLogin form {
-    padding: 1.2rem 0;
-}
-
-form .input-box {
-    margin-bottom: 1rem;
-    position: relative;
-}
-
-    form .input-box .input {
+    .input-box .input {
         display: flex;
         align-items: center;
-        background: #f1f1f1;
-        border-bottom: 1px solid #ccc;
-        padding: 10px;
     }
 
-        form .input-box .input span.txtClass {
-            color: rgba(var(--bs-secondary-rgb), 1);
+        .input-box .input .txtClass {
             margin-right: 10px;
-            font-size: 18px;
         }
 
-        form .input-box .input input {
-            border: none;
-            background: none;
-            outline: none;
-            width: 100%;
-            padding: 0.5rem;
-        }
+.inputLogin {
+    width: 100%;
+    padding: 20px 10px;
+    border: none;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
 
-    form .input-box .togglePassword {
-        position: absolute;
-        right: 15px;
-        cursor: pointer;
-        color: rgba(var(--bs-secondary-rgb), 1);
-        transition: color 0.3s;
+    .inputLogin:focus {
+        outline: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
-
-        form .input-box .togglePassword:hover {
-            color: #333;
-        }
 
 .formCheck {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 1rem 0;
+    margin-bottom: 20px;
 }
 
 .btn-login {
-    background: rgb(21, 21, 100);
-    color: #fff;
-    border: 1px solid rgba(31, 38, 135, 0.37);
-    border-radius: 0.325rem;
-    padding: 0.5rem;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #2196F3, #21CBF3);
+    color: white;
+    font-size: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
     .btn-login:hover {
-        background: rgb(31, 38, 135);
-        transform: scale(1.03);
+        background: linear-gradient(45deg, #21CBF3, #2196F3);
     }
 
 .footerLogin {
+    margin-top: 20px;
     text-align: center;
-    margin-bottom: 1rem;
 }
-
-    .footerLogin a {
-        color: rgb(21, 21, 100);
-        text-decoration: none;
-        transition: color 0.3s;
-    }
-
-        .footerLogin a:hover {
-            color: rgb(31, 38, 135);
-        }
-
-</style >
