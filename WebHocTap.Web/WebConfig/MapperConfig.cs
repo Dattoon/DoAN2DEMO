@@ -22,8 +22,6 @@ namespace WebHocTap.Web.WebConfig
     {
         public MapperConfig()
         {
-            CreateMap<User, AddUserVM>().ReverseMap();
-            CreateMap<User, EditUserVM>().ReverseMap();  // Thêm ánh xạ cho EditUserVM
             CreateMap<CategoryNew, AddorUpdateCategoryNewVM>().ReverseMap();
             CreateMap<News, AddorUpdateNewsVM>().ReverseMap();
             CreateMap<CategorySub, AddorUpdateCategorySubVM>().ReverseMap();
@@ -32,6 +30,7 @@ namespace WebHocTap.Web.WebConfig
             CreateMap<Lesson, AddorUpdateLessonVM>().ReverseMap();
             CreateMap<Answer, UpdateAnswerVM>().ReverseMap();
             CreateMap<User, SignUpVM>().ReverseMap();
+            CreateMap<User, ProfileUpdateVM>().ReverseMap();
         }
 
         public static MapperConfiguration RoleIndexConf = new(mapper =>

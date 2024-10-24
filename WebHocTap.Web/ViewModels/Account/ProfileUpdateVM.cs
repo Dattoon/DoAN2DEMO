@@ -13,7 +13,7 @@ namespace WebHocTap.Web.ViewModels.Account
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
-
+        public IFormFile Avatar { get; set; }
         public string AvatarUrl { get; set; }
     }
 }

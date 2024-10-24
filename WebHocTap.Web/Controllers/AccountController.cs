@@ -16,11 +16,13 @@ namespace WebHocTap.Web.Controllers
     {
         private readonly IMapper _mapper;
         private readonly BaseReponsitory _repo;
+        private readonly IWebHostEnvironment _host;
 
-        public AccountController(BaseReponsitory repo, IMapper mapper) : base(repo)
+        public AccountController(BaseReponsitory repo, IMapper mapper, IWebHostEnvironment host) : base(repo)
         {
             _repo = repo;
             _mapper = mapper;
+            _host = host;
         }
 
         public IActionResult SignUp() => View();
@@ -122,6 +124,30 @@ namespace WebHocTap.Web.Controllers
         }
 
 
+        private string UploadImgAndReturnPath(IFormFile file, string childFolder = "/img/", bool saveInWwwRoot = true)
+        {
+            var root = saveInWwwRoot ? _host.WebRootPath : _host.ContentRootPath;
+            var filename = Path.GetFileNameWithoutExtension(file.FileName)
+                            + DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss-fff")
+                            + Path.GetExtension(file.FileName);
+
+            if (!Directory.Exists(root + childFolder))
+            {
+                Directory.CreateDirectory(root + childFolder);
+            }
+
+            var relativePath = childFolder + filename;
+            var path = root + relativePath;
+            using (var fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
+            {
+                file.CopyTo(fileStream);
+            }
+
+            return relativePath;
+        }
+
+
+
         public IActionResult UpdateProfile(int id)
         {
             var user = _repo.GetOneAsync<User>(x => x.Id == id).Result;
@@ -137,7 +163,6 @@ namespace WebHocTap.Web.Controllers
 
             return View(model);
         }
-
         [HttpPost]
         public async Task<IActionResult> UpdateProfile(ProfileUpdateVM model)
         {
@@ -154,15 +179,24 @@ namespace WebHocTap.Web.Controllers
                 return View(model);
             }
 
-            user.Gmail = model.Gmail;
-            user.PhoneNumber = model.PhoneNumber;
-            user.AvatarUrl = model.AvatarUrl;
+            if (model.AvatarUrl != null)
+            {
+                string avatarPath = UploadImgAndReturnPath(model.Avatar, "/img/avatars/");
+                avatarPath = avatarPath.Split('/').Last(); // Simplifying the path
+                model.AvatarUrl = avatarPath;
+            }
+            else
+            {
+                model.AvatarUrl = user.AvatarUrl; // Retain the existing avatar if no new file is uploaded
+            }
 
+            _mapper.Map(model, user);
             await _repo.UpdateAsync(user);
-
             TempData["Mesg"] = "Cập nhật hồ sơ thành công";
-            return RedirectToAction("Profile", new { id = user.Id });
+            return RedirectToAction(nameof(Index), "Home");
         }
+
+
 
 
 
