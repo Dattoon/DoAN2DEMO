@@ -120,6 +120,7 @@ nav .nagivation ul {
 
 
 
+
 /* Dropdown Button */
 .dropbtn {
     background-color: #FDC93B;
@@ -360,68 +361,163 @@ nav .nagivation ul {
     }
 
 
-    #course .courses {
-        text-align: start;
-        background: #F9F9FF;
-        height: 100%;
-        position: relative;
+/* CSS Cũ */
+/* CSS Cũ */
+.courses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 400px;
+    transition: transform 0.2s;
+}
+
+    .courses:hover {
+        transform: translateY(-10px);
     }
 
-        #course .courses img {
-            width: 100%;
-            height: 60%;
-            background-size: cover;
-            background-position: center;
+    .courses img {
+        width: 100%;
+        height: auto;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+.details {
+    text-align: center;
+    padding: 10px;
+}
+
+    .details span {
+        display: block;
+        font-size: 12px;
+        color: #888;
+    }
+
+    .details h6 {
+        font-size: 18px;
+        margin: 10px 0;
+        font-weight: 600;
+    }
+
+.cost {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #e74c3c;
+    margin: 10px 0;
+}
+
+.btn {
+    text-align: center;
+    margin-top: 10px;
+}
+
+    .btn a {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+        .btn a:hover {
+            background-color: #2980b9;
         }
 
-        #course .courses .details {
-            padding: 15px 15px 0 15px;
+/* CSS Mới */
+#course {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.course-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .course-title .sub-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .course-title .btn-viewmore {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+        .course-title .btn-viewmore:hover {
+            background-color: #2980b9;
         }
 
-            #course .courses .details i {
-                color: #FDC93B;
-                font-size: .9rem;
-            }
+.course-box1 {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-        #course .courses .cost {
-            background-color: rgb(74, 74, 136);
-            color: #fff;
-            line-height: 70px;
-            width: 70px;
-            height: 70px;
-            text-align: center;
-            border-radius: 50%;
-            position: absolute;
-            right: 15%;
-            bottom: 100px;
-        }
+.courses {
+    flex: 1 1 calc(33.333% - 20px);
+    margin: 10px;
+}
 
-        #course .courses .btn {
-            margin-bottom: 25px;
-            position: absolute;
-            right: 5%;
-        }
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 
-        #course .courses a {
-            text-decoration: none;
-            font-size: 0.9rem;
-            padding: 13px 35px;
-            background-color: #fff;
-            font-weight: 600;
-            border-radius: 5px;
-        }
+.pagination-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-            #course .courses a.blue {
-                color: #fff;
-                background: rgb(21, 21, 100);
-                transition: 0.4s ease;
-                right: 0;
-            }
+    .pagination-button:hover {
+        background-color: #2980b9;
+    }
 
-                #course .courses a.blue:hover {
-                    color: rgb(21, 21, 100);
-                    background: #FDC93B;
-                }
+#pagination-numbers {
+    display: flex;
+    align-items: center;
+}
+
+.btn-viewmore {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+    .btn-viewmore:hover {
+        background-color: #2980b9;
+    }
+
+
+  
 
 /* Lybrary */
 
@@ -440,7 +536,7 @@ nav .nagivation ul {
             --bs-gutter-x: 1.5rem;
             -webkit-box-flex: 0;
             flex: 0 0 auto;
-            width: 50%;
+            width: 100%;
             max-width: 100%;
             padding-right: calc(var(--bs-gutter-x) * .5);
             padding-left: calc(var(--bs-gutter-x) * .5);

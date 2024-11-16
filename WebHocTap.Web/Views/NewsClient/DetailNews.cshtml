@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section styleclient{
+@section styleclient {
     <style>
         .clearfix {
             width: 960px;
             margin: 0 auto;
-            padding-top:135px
+            padding-top: 135px;
         }
 
             .clearfix:after {
@@ -23,24 +23,58 @@
             }
 
         .frame2 {
-            background-position: 0 -517px;
             height: 316px;
             width: 924px;
             margin: 0 auto 18px;
             padding: 6px 7px 0;
             text-align: center;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+            .frame2 img {
+                max-width: 100%;
+                height: auto;
+            }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            background: #f1f1f1;
+            position: relative;
+            width: 100%;
+            bottom: 0;
+            left: 0;
         }
     </style>
-}
-<div class="clearfix">
-    <div class="frame2">
-        <div class="box">
-            <img src="~/img/news/@Model.pathImg" alt="Img" height="298" width="350">
+} 
+<div style="float:none">
+<div class="clearfix"> 
+    <div class="frame2"> 
+        <div class="box"> <img src="~/img/news/@Model.pathImg" alt="Img"> 
         </div>
-    </div>
-    <h2 style="text-align:center">@Model.Title</h2>
-
-</div>
+    </div> <h2>@Model.Title</h2> 
+  </div>
 <div class="container">
     @Html.Raw(Model.Description)
+</div>
 </div>
