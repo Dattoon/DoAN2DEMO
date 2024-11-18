@@ -114,7 +114,7 @@ namespace WebHocTap.Web.Controllers
                 RedirectUrls = new PayPal.v1.Payments.RedirectUrls()
                 {
                     CancelUrl = $"{hostname}/Home/CheckoutFail",
-                    ReturnUrl = $"{hostname}/Home/CheckoutSuccess/{categorysub.Id}"
+                    ReturnUrl = $"{hostname}/Home/CheckoutSuccess/?id={categorysub.Id}"
                 },
                 Payer = new PayPal.v1.Payments.Payer()
                 {
