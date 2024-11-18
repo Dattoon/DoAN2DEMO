@@ -22,7 +22,7 @@
                 {
                     <li>
                         <a asp-action="DetailNews" asp-controller="NewsClient" asp-route-id="@news.Id">@news.Title</a>
-                        <p>@news.Description</p>
+                        <p>@Html.Raw(@news.Description)</p>
                     </li>
                 }
             </ul>
@@ -45,7 +45,7 @@
                 {
                     <li>
                         <a asp-action="DetailsSubject" asp-controller="SubjectClient" asp-route-id="@course.Id">@course.NameCategorySub</a>
-                        <p>@course.Descripstion</p>
+                        <p>@Html.Raw(@course.Descripstion)</p>
                     </li>
                 }
             </ul>
