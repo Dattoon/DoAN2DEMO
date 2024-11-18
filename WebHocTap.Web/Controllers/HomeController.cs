@@ -47,6 +47,21 @@ namespace WebHocTap.Web.Controllers
             var data=await _repo.FindAsync<CategorySub>(id);
             return View(data);
         }
+
+
+        public IActionResult Search(string query, int page = 1, int size = 10)
+        { var newsResults = _repo.GetAll<News>().Where(n => n.Title.Contains(query) || n.Description.Contains(query)).ToPagedList(page, size); 
+            var courseResults = _repo.GetAll<CategorySub>().Where(c => c.NameCategorySub.Contains(query) || c.Descripstion.Contains(query)).ToPagedList(page, size);
+            var viewModel = new SearchViewModel
+            {
+                Query = query,
+                NewsResults = newsResults, 
+                CourseResults = courseResults
+            };
+            return View(viewModel); 
+        }
+
+
         [AppAuthorize]
         public async Task<IActionResult> PaypalCheckOut(int id)
         {

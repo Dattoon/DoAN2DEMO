@@ -1,0 +1,57 @@
+﻿@model WebHocTap.Web.Models.SearchViewModel
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "Kết quả tìm kiếm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="padding-top: 135px;">
+    <h2>Kết quả tìm kiếm cho: "@Model.Query"</h2>
+
+    <div class="section">
+        <h3>Tin tức</h3>
+        @if (!Model.NewsResults.Any())
+        {
+            <p>Không tìm thấy kết quả nào phù hợp với từ khóa tìm kiếm của bạn trong mục Tin tức.</p>
+        }
+        else
+        {
+            <ul>
+                @foreach (var news in Model.NewsResults)
+                {
+                    <li>
+                        <a asp-action="DetailNews" asp-controller="NewsClient" asp-route-id="@news.Id">@news.Title</a>
+                        <p>@news.Description</p>
+                    </li>
+                }
+            </ul>
+            <div class="pagination-container">
+                @Html.PagedListPager(Model.NewsResults, page => Url.Action("Search", new { page, query = Model.Query }))
+            </div>
+        }
+    </div>
+
+    <div class="section">
+        <h3>Khóa học</h3>
+        @if (!Model.CourseResults.Any())
+        {
+            <p>Không tìm thấy kết quả nào phù hợp với từ khóa tìm kiếm của bạn trong mục Khóa học.</p>
+        }
+        else
+        {
+            <ul>
+                @foreach (var course in Model.CourseResults)
+                {
+                    <li>
+                        <a asp-action="DetailsSubject" asp-controller="SubjectClient" asp-route-id="@course.Id">@course.NameCategorySub</a>
+                        <p>@course.Descripstion</p>
+                    </li>
+                }
+            </ul>
+            <div class="pagination-container">
+                @Html.PagedListPager(Model.CourseResults, page => Url.Action("Search", new { page, query = Model.Query }))
+            </div>
+        }
+    </div>
+</div>

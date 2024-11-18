@@ -1,0 +1,12 @@
+﻿@model IEnumerable<WebHocTap.Data.Entites.CategorySub>
+
+@{
+    ViewData["Title"] = "Kết quả tìm kiếm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="padding-top: 135px;">
+
+    <!-- Hiển thị kết quả tìm kiếm -->
+    <vc:search-results query="@ViewBag.Query" />
+</div>  

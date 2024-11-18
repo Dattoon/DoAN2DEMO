@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebHocTap.Data.Entites.News>
+﻿@model IPagedList<WebHocTap.Data.Entites.News>
+@using X.PagedList
 
 @{
     ViewData["Title"] = "Index";
@@ -23,7 +24,6 @@
         .clearfix {
             width: 960px;
             margin: 0 auto;
-
         }
 
             .clearfix:after {
@@ -80,25 +80,38 @@
     </style>
 }
 
-<div class="container" style="padding-top: 135px ">
+<div class="container" style="padding-top: 135px;">
+    <!-- Form tìm kiếm -->
+    <form asp-action="Index" method="get" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm" aria-label="Search" name="query" value="@ViewBag.Query">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+    </form>
+
     <div class="main">
         <div class="section">
             <ul id="ul-body">
-                @foreach (var item in Model)
+                @if (!Model.Any())
                 {
-                    <li>
-                        <div class="frame4">
-                            <div class="box">
-                                <img src="~/img/news/@item.pathImg" alt="Img" height="94" width="90">
+                    <p>Không tìm thấy kết quả nào phù hợp với từ khóa tìm kiếm của bạn.</p>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <div class="frame4">
+                                <div class="box">
+                                    <img src="~/img/news/@item.pathImg" alt="Img" height="94" width="90">
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <a style="cursor:pointer; font-weight:bold; float:none;" asp-route-id="@item.Id" asp-action="DetailNews" asp-controller="NewsClient">
-                                @item.Title
-                            </a>
-                            <p>@item.Description</p>
-                        </div>
-                    </li>
+                            <div>
+                                <a style="cursor:pointer; font-weight:bold; float:none;" asp-route-id="@item.Id" asp-action="DetailNews" asp-controller="NewsClient">
+                                    @item.Title
+                                </a>
+                                <p>@item.Description</p>
+                            </div>
+                        </li>
+                    }
                 }
             </ul>
         </div>
