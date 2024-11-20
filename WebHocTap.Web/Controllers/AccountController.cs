@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using WebHocTap.Web.WebConfig.Const;
 using WebHocTap.Web.WebConfig;
+using System.Security.Cryptography;
 
 namespace WebHocTap.Web.Controllers
 {
@@ -194,6 +195,60 @@ namespace WebHocTap.Web.Controllers
             await _repo.UpdateAsync(user);
             TempData["Mesg"] = "Cập nhật hồ sơ thành công";
             return RedirectToAction(nameof(Index), "Home");
+        }
+
+
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = Convert.ToInt32(User.Claims.SingleOrDefault(c => c.Type.Contains(ClaimTypes.NameIdentifier))?.Value);
+            var user = await _repo.FindAsync<User>(userId);
+
+            if (user == null || !VerifyPasswordHash(model.CurrentPassword, user.PasswordHash, user.PasswordSalt))
+            {
+                ModelState.AddModelError(string.Empty, "Mật khẩu hiện tại không chính xác.");
+                return View(model);
+            }
+
+            var passwordHash = CreatePasswordHash(model.NewPassword);
+            user.PasswordHash = passwordHash.Hash;
+            user.PasswordSalt = passwordHash.Salt;
+
+            await _repo.UpdateAsync(user);
+            SetSuccessMesg("Đổi mật khẩu thành công.");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
+        {
+            using (var hmac = new HMACSHA512(storedSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return computedHash.SequenceEqual(storedHash);
+            }
+        }
+
+        private (byte[] Hash, byte[] Salt) CreatePasswordHash(string password)
+        {
+            using (var hmac = new HMACSHA512())
+            {
+                var salt = hmac.Key;
+                var hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return (hash, salt);
+            }
         }
 
 

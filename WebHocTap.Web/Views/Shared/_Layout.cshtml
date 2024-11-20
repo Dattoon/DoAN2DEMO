@@ -50,7 +50,7 @@
                             }
                             <a class="dropdown-item" asp-action="ListSubUserBuy" asp-controller="Home">Khóa học đã mua</a>
                             <a class="dropdown-item" asp-action="UpdateProfile" asp-controller="Account" asp-route-id="@Convert.ToInt32(User.Claims.SingleOrDefault(c => c.Type.Contains(System.Security.Claims.ClaimTypes.NameIdentifier))?.Value)">Đổi thông tin</a>
-                            <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Auth" asp-route-id="@Convert.ToInt32(User.Claims.SingleOrDefault(c => c.Type.Contains(System.Security.Claims.ClaimTypes.NameIdentifier))?.Value)">Đổi mật khẩu</a>
+                            <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Đổi mật khẩu</a>
                             <a asp-action="Logout" asp-controller="Account" class="dropdown-item">Đăng xuất</a>
                         </div>
                     </li>
@@ -64,6 +64,7 @@
             </ul>
             <img id="menu-btn" src="images/menu.png" alt="Menu">
         </div>
+
     </nav>
 
     <!-- Home -->
@@ -124,5 +125,6 @@
 
     <script src="~/clientLTE/js/function.js" asp-append-version="true"></script>
     @RenderSection("scriptClient", false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
