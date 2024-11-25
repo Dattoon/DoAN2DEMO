@@ -7,6 +7,15 @@
 
 @section styleclient {
     <style>
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+
         .clearfix {
             width: 960px;
             margin: 0 auto;
@@ -64,15 +73,73 @@
             left: 0;
         }
     </style>
-} 
-<div style="float:none">
-<div class="clearfix"> 
-    <div class="frame2"> 
-        <div class="box"> <img src="~/img/news/@Model.pathImg" alt="Img"> 
+}
+
+@section scriptclient {
+    <script type="text/JavaScript">
+        function killCopy(e) {
+            return false;
+        }
+        function reEnable() {
+            return true;
+        }
+        document.onselectstart = new Function("return false");
+        if (window.sidebar) {
+            document.onmousedown = killCopy;
+            document.onclick = reEnable;
+        }
+    </script>
+    <script language="JavaScript">
+        window.onload = function () {
+            document.addEventListener("contextmenu", function (e) {
+                e.preventDefault();
+            }, false);
+            document.addEventListener("keydown", function (e) {
+                // "I" key
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                    disabledEvent(e);
+                }
+                // "J" key
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+                    disabledEvent(e);
+                }
+                // "S" key + macOS
+                if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+                    disabledEvent(e);
+                }
+                // "U" key
+                if (e.ctrlKey && e.keyCode == 85) {
+                    disabledEvent(e);
+                }
+                // "F12" key
+                if (event.keyCode == 123) {
+                    disabledEvent(e);
+                }
+            }, false);
+
+            function disabledEvent(e) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                } else if (window.event) {
+                    window.event.cancelBubble = true;
+                }
+                e.preventDefault();
+                return false;
+            }
+        };
+    </script>
+}
+
+<div>
+    <div class="clearfix">
+        <div class="frame2">
+            <div class="box">
+                <img src="~/img/news/@Model.pathImg" alt="Img">
+            </div>
         </div>
-    </div> <h2>@Model.Title</h2> 
-  </div>
-<div class="container">
-    @Html.Raw(Model.Description)
-</div>
+        <h2>@Model.Title</h2>
+    </div>
+    <div class="container" style="float:none">
+        @Html.Raw(Model.Description)
+    </div>
 </div>
