@@ -14,6 +14,7 @@ namespace WebHocTap.Data.Entites
     {
         public string Content { get; set; }
         public int? IdUser { get; set; }
+        public User User { get; set; }
         public int IdLesson { get; set; }
         public Lesson lesson { get; set; }
     }

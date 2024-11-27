@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using WebHocTap.Data.Config;
 using WebHocTap.Data.Entites;
 using WebHocTap.Web.Areas.Admin.ViewModels.CategoryNew;
 using WebHocTap.Web.Areas.Admin.ViewModels.CategorySub;
@@ -20,6 +21,7 @@ namespace WebHocTap.Web.WebConfig
 {
     public class MapperConfig : Profile
     {
+
         public MapperConfig()
         {
             CreateMap<CategoryNew, AddorUpdateCategoryNewVM>().ReverseMap();
@@ -31,6 +33,11 @@ namespace WebHocTap.Web.WebConfig
             CreateMap<Answer, UpdateAnswerVM>().ReverseMap();
             CreateMap<User, SignUpVM>().ReverseMap();
             CreateMap<User, ProfileUpdateVM>().ReverseMap();
+
+            // Add mappings for Comment and CommentVM
+            CreateMap<Comemt, CommentVM>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
+            CreateMap<CommentVM, Comemt>();
         }
 
         public static MapperConfiguration RoleIndexConf = new(mapper =>
@@ -49,13 +56,10 @@ namespace WebHocTap.Web.WebConfig
         {
             mapper.CreateMap<User, UserDataForApp>()
                 .ForMember(uItem => uItem.RoleName, opts => opts.MapFrom(uEntity => uEntity.role == null ? "" : uEntity.role.RoleName))
-                .ForMember(uItem => uItem.Permission, opts => opts.MapFrom
-                (
-                    uEntity => string.Join(',', uEntity.role
-                                                    .rolePermissions
-                                                    .Select(p => p.MStPermissionId))
-                ));
+                .ForMember(uItem => uItem.Permission, opts => opts.MapFrom(
+                    uEntity => string.Join(',', uEntity.role.rolePermissions.Select(p => p.MStPermissionId))));
         });
+
 
         public static MapperConfiguration CategoryNewIndexConf = new(mapper =>
         {

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<WebHocTap.Web.ViewModels.CommentVM>
+
+<h3>Bình luận</h3>
+<div>
+    @foreach (var comment in Model)
+    {
+        <div>
+            <strong>@comment.UserName</strong>
+            <p>@comment.Content</p>
+            <small>@comment.CreateAt</small>
+        </div>
+    }
+</div>

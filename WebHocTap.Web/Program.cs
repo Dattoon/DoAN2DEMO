@@ -5,6 +5,7 @@ using WebHocTap.Web.Common.Mailer;
 using WebHocTap.Web.WebConfig;
 using WebHocTap.Web.WebConfig.Const;
 using Microsoft.EntityFrameworkCore;
+using WebHocTap.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<WebHocTapDbContext>(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BaseReponsitory>();
 builder.Services.AddServiceRepositories();
+builder.Services.AddScoped<CommentRepository>();
+
 //câu hình đăng nhập
 builder.Services.AddAuthentication(AppConst.COOKIES_AUTH)
                 .AddCookie(options =>

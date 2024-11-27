@@ -48,31 +48,26 @@ namespace WebHocTap.Web.Controllers
         }
         public async Task<IActionResult> Lesson(int id)
         {
-            var data= new LessonDetailVM(); 
+            var data = new LessonDetailVM();
             // tìm nội dung bài học
-            var lesson = _repo.GetAll<Lesson>(x=>x.IdChapter==id).OrderBy(x=>x.Id).ToList();
+            var lesson = _repo.GetAll<Lesson>(x => x.IdChapter == id).OrderBy(x => x.Id).ToList();
             data.lessons = lesson;
             // tìm ra chương của bài học để get tất cả các chương chung 1 môn
-            var chapter=await _repo.FindAsync<Chapter>(id);
-            var listchapter=_repo.GetAll<Chapter>(x=>x.IdSubject==chapter.IdSubject).OrderBy(x=>x.Id).ToList();
+            var chapter = await _repo.FindAsync<Chapter>(id);
+            var listchapter = _repo.GetAll<Chapter>(x => x.IdSubject == chapter.IdSubject).OrderBy(x => x.Id).ToList();
             data.chapters = listchapter;
             // tìm tên môn học
             int idsub = Convert.ToInt32(chapter.IdSubject);
-            var sub= await _repo.FindAsync<Subject>(idsub);
+            var sub = await _repo.FindAsync<Subject>(idsub);
             data.subject = sub;
             var test = _repo.GetAll<Test>(x => x.IdChapter == id).ToList();
-            if (test.Count > 0)
-            {
-                data.IsTest = true;
-            }
-            else
-            {
-                data.IsTest = false;
-            }
-            ViewBag.IdChapter=id;
+            data.IsTest = test.Count > 0;
+            ViewBag.IdChapter = id;
+            ViewBag.LessonId = lesson.FirstOrDefault()?.Id; // Thiết lập LessonId
             return View(data);
         }
-        public  IActionResult DetailLesson(int id)
+
+        public IActionResult DetailLesson(int id)
         { 
             var data=new DetailLessonJSVM();
             var lesson = _repo.GetAll<Lesson>().Where(x=>x.IdChapter==id).ToList();

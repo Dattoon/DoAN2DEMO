@@ -4,6 +4,8 @@
     ViewData["Title"] = "Lesson";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var i = 0;
+    var lessonId = Model.lessons.FirstOrDefault()?.Id ?? 0; // Lấy LessonId đầu tiên
+    ViewBag.LessonId = lessonId; // Thiết lập LessonId trong ViewBag
 }
 <link href="~/clientLTE/css/lession.css" rel="stylesheet" />
 <section id="main" style="padding-top:150px">
@@ -13,19 +15,13 @@
             <!-- Left Col -->
             <div class="leftcol-lession">
                 <div class="card-lession">
-
                     <ul class="toc chapters">
                         <li class="heading">@Model.subject.NameSubject</li>
-
                         @foreach (var chapter in Model.chapters)
                         {
-
                             <li class="js-li"><a data-id="@chapter.Id" style="cursor:pointer" class="js-chapter">@chapter.NameChapter</a></li>
-
                         }
-
                     </ul>
-
                 </div>
             </div>
 
@@ -35,19 +31,30 @@
                 {
                     @Html.Raw(lesson.Content)
                 }
+                
+              @*   <!-- form thêm bình luận -->
+                <div>
+                    @await component.invokeasync("addcomment", new { lessonid = viewbag.lessonid })
+                </div>
+
+                <!-- hiển thị bình luận -->
+                <div id="commentssection">
+                    @await component.invokeasync("comments", new { lessonid = viewbag.lessonid })
+                </div> *@
             </div>
 
             <!-- Right Col -->
             <div class="rightcol-lession js-test">
                 @if (Model.IsTest)
                 {
-                    <a asp-action="TestClient" asp-controller="subjectClient" asp-route-id="@ViewBag.IdChapter">Bài kiểm tra</a>
+                    <a asp-action="TestClient" asp-controller="SubjectClient" asp-route-id="@ViewBag.IdChapter">Bài kiểm tra</a>
                 }
             </div>
 
         </div>
     </div>
 </section>
+
 @section styleclient {
     <style>
         body {
@@ -80,27 +87,26 @@
 
         window.onload = function () {
             document.addEventListener("contextmenu", function (e) {
-                if (e.target.closest('.no-copy')) {
-                    e.preventDefault();
+                nếu(e.target.closest('.no-copy')) {
+                    e.prevent.preventDefault();
                 }
             }, false);
-            document.addEventListener("keydown", function (e) {
-                if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 85) ||
+            document.add.addEventListener("keydown", function (e) {
+                nếu(e.ctrlKey và e.shiftKey và(e.keyCode == 73 hoặc e.keyCode == 74 hoặc e.keyCode == 85) ||
                     e.keyCode == 123 ||
-                    (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey))) {
-                    if (e.target.closest('.no-copy')) {
-                        disabledEvent(e);
-                    }
+                    (e.keyCode == 83 và(navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey))) {
+                nếu(e.target.closest('.no-copy')) {
+                    disabledEvent(e);
                 }
-            }, false);
-
-            function disabledEvent(e) {
-                e.stopPropagation();
-                e.preventDefault();
-                return false;
             }
-        };
+        }, false);
+
+        function disabledEvent(e) {
+            e.stopPropagation();
+            e.prevent.preventDefault();
+            return false;
+        }
+                };
     </script>
     <script src="~/clientLTE/js/detaillesson.js" asp-append-version="true"></script>
 }
-
