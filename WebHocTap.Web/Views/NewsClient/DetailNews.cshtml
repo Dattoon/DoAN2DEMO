@@ -6,6 +6,13 @@
 }
 
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
         .clearfix {
             width: 960px;
             margin: 0 auto;
@@ -23,7 +30,7 @@
 
         .frame2 {
             height: 316px;
-            width: 924px;
+            width: 100%;
             margin: 0 auto 18px;
             padding: 6px 7px 0;
             text-align: center;
@@ -31,17 +38,21 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
+            background-color: #ffffff;
         }
 
             .frame2 img {
                 max-width: 100%;
                 height: auto;
+                border-radius: 8px;
             }
 
         h2 {
             text-align: center;
             margin-top: 20px;
             font-size: 24px;
+            color: #333;
+            font-weight: bold;
         }
 
         .container {
@@ -51,6 +62,8 @@
             font-size: 16px;
             line-height: 1.6;
             background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         .footer {
@@ -68,7 +81,7 @@
     <div class="clearfix">
         <div class="frame2">
             <div class="box">
-                <img src="~/img/news/@Model.pathImg" alt="Img">
+                <img src="~/img/news/@Model.pathImg" alt="News Image">
             </div>
         </div>
         <h2>@Model.Title</h2>
