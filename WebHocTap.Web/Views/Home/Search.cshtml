@@ -21,6 +21,7 @@
                 @foreach (var news in Model.NewsResults)
                 {
                     <li>
+                        <a asp-action="DetailNews" asp-controller="NewsClient" asp-route-id="@news.Id">@news.</a>
                         <a asp-action="DetailNews" asp-controller="NewsClient" asp-route-id="@news.Id">@news.Title</a>
                         <p>@Html.Raw(@news.Title)</p>
                     </li>

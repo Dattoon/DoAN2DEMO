@@ -1,5 +1,5 @@
 ﻿@model WebHocTap.Web.ViewModels.Account.ProfileUpdateVM
-
+<div style="padding:100px">
 <form asp-action="UpdateProfile" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Ảnh đại diện hiện tại</label>
@@ -32,7 +32,7 @@
 
     <button type="submit" class="btn btn-primary">Cập nhật hồ sơ</button>
 </form>
-
+</div>
 <script>
     function previewAvatar() {
         const file = document.querySelector('input[type="file"]').files[0];
