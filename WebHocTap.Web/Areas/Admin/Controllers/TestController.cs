@@ -11,52 +11,53 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
 {
     public class TestController : BaseAdminController
     {
-        public readonly IMapper _mapper;
-        public TestController(BaseReponsitory _repo,IMapper mapper):base(_repo)
+        private readonly IMapper _mapper;
+
+        public TestController(BaseReponsitory repo, IMapper mapper) : base(repo)
         {
             _mapper = mapper;
         }
-        public IActionResult Index(int id,int page=1,int size=10)
+
+        public IActionResult Index(int id, int page = 1, int size = 10)
         {
-            var data= _repo.GetAll<Test,ListTestItemVM>(MapperConfig.TestIndexConf)
-                .Where(x => x.IdChapter == id).ToPagedList(page,size);
-            ViewBag.IdLesson= id;
+            var data = _repo.GetAll<Test, ListTestItemVM>(MapperConfig.TestIndexConf)
+                .Where(x => x.IdChapter == id)
+                .ToPagedList(page, size);
+
+            ViewBag.IdLesson = id;
             return View(data);
         }
+
         public IActionResult Create(int id)
         {
-            var data = new AddorEditQAVM();
-            data.IdChapter = id;
+            var data = new AddorEditQAVM { IdChapter = id };
             return View(data);
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(AddorEditQAVM model)
         {
-            var data = new Test();
-            data.Question = model.Question;
-            data.IdChapter =model.IdChapter;
-            List<Answer> answers =new List<Answer>();
-            foreach(var item in model.AnswerFail)
+            if (!ModelState.IsValid)
             {
-                if (item!=null)
-                {
-                    var answer = new Answer();
-                    answer.IsSucces = false;
-                    answer.Description = item;
-                    answers.Add(answer);
-                }
+                SetErrorMesg("Dữ liệu không hợp lệ");
+                return View(model);
             }
-            var answersusces = new Answer();
-            answersusces.IsSucces = true;
-            answersusces.Description = model.AnswerSucces;
-            answers.Add(answersusces);
 
+            var test = _mapper.Map<Test>(model);
+            var answers = model.AnswerFail.Where(item => !string.IsNullOrEmpty(item))
+                                           .Select(item => new Answer { Description = item, IsSucces = false })
+                                           .ToList();
 
-            data.answers = answers;
-            await _repo.AddAsync(data);
+            var correctAnswer = new Answer { Description = model.AnswerSucces, IsSucces = true };
+            answers.Add(correctAnswer);
+
+            test.answers = answers;
+            await _repo.AddAsync(test);
+
             SetSuccessMesg("Thêm câu hỏi thành công");
-            return RedirectToAction("Index", new { id = data.IdChapter });
+            return RedirectToAction(nameof(Index), new { id = test.IdChapter });
         }
+
         public async Task<IActionResult> Detail(int id)
         {
             var data = await _repo.GetOneAsync<Test, DetailTest>(id, t => new DetailTest
@@ -64,36 +65,45 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
                 Id = t.Id,
                 Question = t.Question,
             });
+
             return View(data);
         }
+
         public async Task<IActionResult> Delete(int id)
         {
-            var data=await _repo.FindAsync<Test>(id);
-            if (data != null)
+            var test = await _repo.FindAsync<Test>(id);
+            if (test != null)
             {
-                var listanswer= _repo.GetAll<Answer>().Where(x=>x.IdQues==data.Id).ToList();
-                foreach(var item in listanswer)
+                var answers = _repo.GetAll<Answer>().Where(x => x.IdQues == test.Id).ToList();
+                foreach (var answer in answers)
                 {
-                    await _repo.DeleteAsync(item);
+                    await _repo.DeleteAsync(answer);
                 }
-                await _repo.DeleteAsync(data);
+                await _repo.DeleteAsync(test);
                 SetSuccessMesg("Xóa thành công");
             }
-            return RedirectToAction("Index", new { id = data.IdChapter });
+            return RedirectToAction(nameof(Index), new { id = test?.IdChapter });
         }
+
         public IActionResult ListAnswer(int id)
         {
-            var data=_repo.GetAll<Answer,ListAnswerItemVM>(MapperConfig.ListAnswerIndexConf)
-                .Where(a=>a.IdQues==id).ToList();
-            return new JsonResult(data);
+            var data = _repo.GetAll<Answer, ListAnswerItemVM>(MapperConfig.ListAnswerIndexConf)
+                             .Where(a => a.IdQues == id)
+                             .ToList();
+            return Json(data);
         }
+
         public async Task<IActionResult> DeleteAnswer(int id)
         {
-            var data=await _repo.FindAsync<Answer>(id);
-            await _repo.DeleteAsync(data);
-            SetSuccessMesg("Xóa câu trả lời thành công");
-            return RedirectToAction("Detail", new { id = data.IdQues });
+            var answer = await _repo.FindAsync<Answer>(id);
+            if (answer != null)
+            {
+                await _repo.DeleteAsync(answer);
+                SetSuccessMesg("Xóa câu trả lời thành công");
+            }
+            return RedirectToAction(nameof(Detail), new { id = answer?.IdQues });
         }
+
         public async Task<IActionResult> _UpdateAnswer(int id)
         {
             var data = await _repo.GetOneAsync<Answer, UpdateAnswerVM>(id, a => new UpdateAnswerVM
@@ -103,14 +113,21 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
             });
             return PartialView(data);
         }
+
         [HttpPost]
         public async Task<IActionResult> _UpdateAnswer(UpdateAnswerVM model)
         {
-            var data= await _repo.FindAsync<Answer>(model.Id);
-            if(data != null)
+            if (!ModelState.IsValid)
             {
-                _mapper.Map<UpdateAnswerVM,Answer>(model,data);
-                await _repo.UpdateAsync(data);
+                SetErrorMesg("Dữ liệu không hợp lệ");
+                return BadRequest(ModelState);
+            }
+
+            var answer = await _repo.FindAsync<Answer>(model.Id);
+            if (answer != null)
+            {
+                _mapper.Map(model, answer);
+                await _repo.UpdateAsync(answer);
                 SetSuccessMesg("Cập nhật thành công");
             }
             return Ok(true);

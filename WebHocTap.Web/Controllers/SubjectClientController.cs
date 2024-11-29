@@ -65,11 +65,22 @@ namespace WebHocTap.Web.Controllers
             // Lấy danh sách bình luận
             data.Comments = _mapper.Map<List<CommentViewModel>>(await _commentRepository.GetCommentsByLessonIdAsync(id));
 
+            // Cung cấp URL video YouTube từ dữ liệu bài học
+            var lesson = data.lessons.FirstOrDefault();
+            if (lesson != null)
+            {
+                data.VideoUrl = lesson.Video;
+            }
+
             ViewBag.IdChapter = id;
             ViewBag.LessonId = data.lessons.FirstOrDefault()?.Id;
 
             return View(data);
         }
+
+
+
+
 
         public IActionResult DetailLesson(int id)
         {

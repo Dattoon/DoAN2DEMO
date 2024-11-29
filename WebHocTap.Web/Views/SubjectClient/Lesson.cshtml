@@ -5,6 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var lessonId = Model.lessons.FirstOrDefault()?.Id ?? 0;
     ViewBag.LessonId = lessonId;
+
+    // Lấy ID video từ URL YouTube đầy đủ
+    string videoId = null;
+    if (!string.IsNullOrEmpty(Model.VideoUrl))
+    {
+        var uri = new Uri(Model.VideoUrl);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        videoId = query["v"];
+    }
+    string embedUrl = !string.IsNullOrEmpty(videoId) ? $"https://www.youtube.com/embed/{videoId}" : null;
 }
 <link href="~/clientLTE/css/lession.css" rel="stylesheet" />
 
@@ -26,6 +36,16 @@
 
             <!-- Mid Col -->
             <div class="midcol-lession js-content no-copy">
+                @if (!string.IsNullOrEmpty(embedUrl))
+                {
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="@embedUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                }
+                else
+                {
+                    <p>Không thể tải video từ YouTube. Vui lòng kiểm tra kết nối của bạn hoặc thử lại sau.</p>
+                }
                 @foreach (var lesson in Model.lessons)
                 {
                     @Html.Raw(lesson.Content)
@@ -85,7 +105,8 @@
 }
 
 @section scriptClient {
-    <script type="text/JavaScript">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
         $(document).ready(function () {
             $('#comment-form').submit(function (event) {
                 event.preventDefault();
@@ -133,13 +154,12 @@
                     },
                     error: function (xhr, status, error) {
                         console.log('Error loading comments:', error);
-                    }   
+                    }
                 });
             }
 
             loadComments();
         });
     </script>
-
     <script src="~/clientLTE/js/detaillesson.js" asp-append-version="true"></script>
 }

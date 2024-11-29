@@ -1,15 +1,10 @@
-﻿@model IEnumerable<WebHocTap.Web.ViewModels.Subject.TestAnswerClientVM>
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/clientLTE/css/test.css" rel="stylesheet" asp-append-version="true" />
-
     <title>Document</title>
 </head>
 <body>
@@ -52,8 +47,6 @@
                                                     <div class="answer-box">
                                                         @foreach (var answer in ques.answers)
                                                         {
-
-
                                                             @if (answer.IsSucces)
                                                             {
                                                                 <label class="formui-radio option">
@@ -63,13 +56,12 @@
                                                             }
                                                             else
                                                             {
-                                                            <label class="formui-radio option">
-                                                                <input type="radio" name="question[@ques.Id]" class="js-feld" value="@answer.Description" />
-                                                                @answer.Description
-                                                            </label>
-                                                                }
+                                                                <label class="formui-radio option">
+                                                                    <input type="radio" name="question[@ques.Id]" class="js-feld" value="@answer.Description" />
+                                                                    @answer.Description
+                                                                </label>
                                                             }
-
+                                                        }
                                                     </div>
                                                 </div>
                                             </span>
@@ -80,7 +72,7 @@
                         </div>
                         <div class="test-footer">
                             <input type="button" value="Submit" id="bnSuccess">
-                            <!-- <button type="button" id="bnSuccess">Success</button> -->
+                            <input type="button" value="Thoát" onclick="history.back()">
                             <label style="display: none!important;"><input id="chCircle" type="checkbox" /> Close button as a circle</label>
                         </div>
                     </div>
@@ -91,6 +83,5 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="~/clientLTE/js/check.js" asp-append-version="true"></script>
-
 </body>
 </html>
