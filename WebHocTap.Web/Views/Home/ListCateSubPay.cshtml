@@ -26,11 +26,15 @@
             <img src="/img/categorysub/@item.pathImg" alt="">
             <div class="details">
                 <span>Ngày tạo @item.CreateAt.ToDMY()</span>
-                <a asp-action="DetailsSubject" asp-controller="SubjectClient" asp-route-id="@item.Id"><h6>@item.NameCategorySub <i class="fa fa-lock" style="color: black;"></i> <i class="fa fa-check" style="color: green;"></i></h6></a>
+                <a asp-action="DetailsSubject" asp-controller="SubjectClient" asp-route-id="@item.Id"><h6>@item.NameCategorySub <i class="fa fa-lock" style="color: black;"></i></h6></a>
 
             </div>
             <div class="cost">
                 @item.Price.Value.ToString("#,##0") VNĐ
+            </div>
+
+            <div class="btn">
+                <div href="@Url.Action("DetailsSubject", "SubjectClient", new { id = item.Id })" class="btn-viewmore"></div>
             </div>
         </li>
     }
