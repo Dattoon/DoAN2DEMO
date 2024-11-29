@@ -35,9 +35,7 @@ namespace WebHocTap.Web.WebConfig
             CreateMap<User, ProfileUpdateVM>().ReverseMap();
 
             // Add mappings for Comment and CommentVM
-            CreateMap<Comemt, CommentVM>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
-            CreateMap<CommentVM, Comemt>();
+            CreateMap<Comemt, CommentViewModel>().ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName)); CreateMap<CommentViewModel, Comemt>();
         }
 
         public static MapperConfiguration RoleIndexConf = new(mapper =>

@@ -3,15 +3,14 @@
 @{
     ViewData["Title"] = "Lesson";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var i = 0;
-    var lessonId = Model.lessons.FirstOrDefault()?.Id ?? 0; // Lấy LessonId đầu tiên
-    ViewBag.LessonId = lessonId; // Thiết lập LessonId trong ViewBag
+    var lessonId = Model.lessons.FirstOrDefault()?.Id ?? 0;
+    ViewBag.LessonId = lessonId;
 }
 <link href="~/clientLTE/css/lession.css" rel="stylesheet" />
+
 <section id="main" style="padding-top:150px">
     <div class="container-lession">
         <div class="row-lession">
-
             <!-- Left Col -->
             <div class="leftcol-lession">
                 <div class="card-lession">
@@ -31,16 +30,6 @@
                 {
                     @Html.Raw(lesson.Content)
                 }
-                
-              @*   <!-- form thêm bình luận -->
-                <div>
-                    @await component.invokeasync("addcomment", new { lessonid = viewbag.lessonid })
-                </div>
-
-                <!-- hiển thị bình luận -->
-                <div id="commentssection">
-                    @await component.invokeasync("comments", new { lessonid = viewbag.lessonid })
-                </div> *@
             </div>
 
             <!-- Right Col -->
@@ -50,10 +39,37 @@
                     <a asp-action="TestClient" asp-controller="SubjectClient" asp-route-id="@ViewBag.IdChapter">Bài kiểm tra</a>
                 }
             </div>
-
         </div>
     </div>
 </section>
+
+<div>
+    @if (Model.Comments != null && Model.Comments.Any())
+    {
+        <div id="comments">
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="comment">
+                    <p>@comment.Content</p>
+                    <small>Đăng bởi: @comment.UserName vào @comment.CreatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div id="comments">
+            <p>Chưa có bình luận nào.</p>
+        </div>
+    }
+</div>
+
+<!-- Form thêm bình luận -->
+<form id="comment-form">
+    <textarea name="Content" placeholder="Viết bình luận của bạn..." required></textarea>
+    <input type="hidden" name="LessonId" value="@ViewBag.LessonId" />
+    <button type="submit">Gửi</button>
+</form>
 
 @section styleclient {
     <style>
@@ -70,43 +86,60 @@
 
 @section scriptClient {
     <script type="text/JavaScript">
-        function disableCopy(e) {
-            return false;
-        }
-        function reEnable() {
-            return true;
-        }
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const noCopyElements = document.querySelectorAll('.no-copy');
-            noCopyElements.forEach(element => {
-                element.oncontextmenu = function () { return false; };
-                element.onselectstart = function () { return false; };
-                element.onmousedown = function () { return false; };
+        $(document).ready(function () {
+            $('#comment-form').submit(function (event) {
+                event.preventDefault();
+                console.log('Form submitted');
+                var content = $('textarea[name="Content"]').val();
+                var lessonId = $('input[name="LessonId"]').val();
+
+                $.ajax({
+                    url: '/api/comments',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        Content: content,
+                        LessonId: lessonId,
+                        UserName: 'DummyUser' // Thêm giá trị UserName tạm thời nếu cần
+                    }),
+                    success: function (response) {
+                        console.log('Success:', response);
+                        $('#comments').prepend('<div class="comment"><p>' + response.content + '</p><small>Đăng bởi: ' + response.userName + ' vào ' + new Date(response.createdAt).toLocaleString() + '</small></div>');
+                        $('textarea[name="Content"]').val('');
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error:', error);
+                        console.log('XHR:', xhr);
+                        console.log('Status:', status);
+                        console.log('Response:', xhr.responseText);
+                    }
+                });
             });
-        });
 
-        window.onload = function () {
-            document.addEventListener("contextmenu", function (e) {
-                nếu(e.target.closest('.no-copy')) {
-                    e.prevent.preventDefault();
-                }
-            }, false);
-            document.add.addEventListener("keydown", function (e) {
-                nếu(e.ctrlKey và e.shiftKey và(e.keyCode == 73 hoặc e.keyCode == 74 hoặc e.keyCode == 85) ||
-                    e.keyCode == 123 ||
-                    (e.keyCode == 83 và(navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey))) {
-                nếu(e.target.closest('.no-copy')) {
-                    disabledEvent(e);
-                }
+            function loadComments() {
+                $.ajax({
+                    url: '/api/comments/' + $('input[name="LessonId"]').val(),
+                    type: 'GET',
+                    success: function (response) {
+                        console.log('Comments loaded:', response);
+                        if (response && response.length > 0) {
+                            $('#comments').empty();
+                            $.each(response, function (index, comment) {
+                                $('#comments').append('<div class="comment"><p>' + comment.content + '</p><small>Đăng bởi: ' + comment.userName + ' vào ' + new Date(comment.createdAt).toLocaleString() + '</small></div>');
+                            });
+                        } else {
+                            $('#comments').html('<p>Chưa có bình luận nào.</p>');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error loading comments:', error);
+                    }   
+                });
             }
-        }, false);
 
-        function disabledEvent(e) {
-            e.stopPropagation();
-            e.prevent.preventDefault();
-            return false;
-        }
-                };
+            loadComments();
+        });
     </script>
+
     <script src="~/clientLTE/js/detaillesson.js" asp-append-version="true"></script>
 }

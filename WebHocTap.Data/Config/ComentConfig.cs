@@ -1,11 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebHocTap.Data.Entites;
+using WebHocTap.Share.Const;
 
 namespace WebHocTap.Data.Config
 {
@@ -13,9 +9,17 @@ namespace WebHocTap.Data.Config
     {
         public void Configure(EntityTypeBuilder<Comemt> builder)
         {
-            builder.HasOne(m => m.lesson)
-            .WithMany(m => m.comemts)
-            .HasForeignKey(m => m.IdLesson);
+            builder.ToTable(NameTable.ComentTable);
+
+            // Cấu hình quan hệ với Lesson
+            builder.HasOne(m => m.Lesson)
+                   .WithMany(m => m.comemts)
+                   .HasForeignKey(m => m.IdLesson);
+
+            // Cấu hình quan hệ với User
+            builder.HasOne(m => m.User)
+                   .WithMany(u => u.Comemts)
+                   .HasForeignKey(m => m.IdUser);
         }
     }
 }

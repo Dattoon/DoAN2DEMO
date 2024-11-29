@@ -23,7 +23,7 @@ namespace WebHocTap.Data.Entites
         public int? IdRole { get; set; }
         public Role role { get; set; }
         public ICollection<PurchasedCourse> purchasedCourses { get; set; }
-
+        public ICollection<Comemt> Comemts { get; set; } = new HashSet<Comemt>();
         public string AvatarUrl { get; set; } 
     }
 }

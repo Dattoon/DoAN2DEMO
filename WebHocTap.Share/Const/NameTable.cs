@@ -8,6 +8,7 @@ namespace WebHocTap.Share.Const
 {
     public class NameTable
     {
+
         public const string AnswerTable = "Answer";
         public const string CategoryNewTable = "CategoryNew";
         public const string CategorySubTable = "CategorySub";

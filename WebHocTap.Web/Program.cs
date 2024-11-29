@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<WebHocTapDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Database"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Database1"));
 });
 // khai báo reponsitory
 builder.Services.AddHttpContextAccessor();
@@ -41,6 +41,7 @@ builder.Services.AddSingleton(mapper);
 AppMailConfiguration mailConfig = new();
 mailConfig.LoadFromConfig(builder.Configuration);
 builder.Services.AddSingleton(mailConfig);
+builder.Services.AddApplicationInsightsTelemetry();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
