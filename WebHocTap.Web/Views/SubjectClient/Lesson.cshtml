@@ -6,7 +6,6 @@
     var lessonId = Model.lessons.FirstOrDefault()?.Id ?? 0;
     ViewBag.LessonId = lessonId;
 
-    // Lấy ID video từ URL YouTube đầy đủ
     string videoId = null;
     if (!string.IsNullOrEmpty(Model.VideoUrl))
     {
@@ -56,7 +55,7 @@
             <div class="rightcol-lession js-test">
                 @if (Model.IsTest)
                 {
-                    <a asp-action="TestClient" asp-controller="SubjectClient" asp-route-id="@ViewBag.IdChapter">Bài kiểm tra</a>
+                    <a class="test-button" asp-action="TestClient" asp-controller="SubjectClient" asp-route-id="@ViewBag.IdChapter">Bài kiểm tra</a>
                 }
             </div>
         </div>
@@ -92,20 +91,12 @@
 </form>
 
 @section styleclient {
-    <style>
-        body {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            -o-user-select: none;
-            user-select: none;
-        }
-    </style>
+    <link href="~/clientLTE/css/lession.css" rel="stylesheet" />
 }
 
 @section scriptClient {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="~/clientLTE/js/detaillesson.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
             $('#comment-form').submit(function (event) {
@@ -121,7 +112,7 @@
                     data: JSON.stringify({
                         Content: content,
                         LessonId: lessonId,
-                        UserName: 'DummyUser' // Thêm giá trị UserName tạm thời nếu cần
+                        UserName: 'DummyUser'
                     }),
                     success: function (response) {
                         console.log('Success:', response);
@@ -161,5 +152,4 @@
             loadComments();
         });
     </script>
-    <script src="~/clientLTE/js/detaillesson.js" asp-append-version="true"></script>
 }

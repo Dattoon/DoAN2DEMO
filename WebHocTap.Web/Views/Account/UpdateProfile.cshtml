@@ -1,37 +1,40 @@
 ﻿@model WebHocTap.Web.ViewModels.Account.ProfileUpdateVM
-<div style="padding:100px">
-<form asp-action="UpdateProfile" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label>Ảnh đại diện hiện tại</label>
-        <div>
-            <img id="avatarPreview" src="@Model.AvatarUrl" alt="Avatar" class="img-thumbnail" style="max-width: 200px;" />
+<head>
+    <link href="./clientLTE/css/UpdateProfile.css" rel="stylesheet" />
+</head>
+<div>
+    <form asp-action="UpdateProfile" method="post" enctype="multipart/form-data">
+        <div class="form-group text-center">
+            <label>Ảnh đại diện hiện tại</label>
+            <img id="avatarPreview" src="@Model.AvatarUrl" alt="Avatar" class="img-thumbnail" />
         </div>
-    </div>
 
-    <input asp-for="UserId" type="hidden" />
+        <input asp-for="UserId" type="hidden" />
 
-    <div class="form-group">
-        <label asp-for="Gmail">Email</label>
-        <input asp-for="Gmail" class="form-control" />
-    </div>
+        <div class="form-group">
+            <label asp-for="Gmail">Email</label>
+            <input asp-for="Gmail" class="form-control" />
+        </div>
 
-    <div class="form-group">
-        <label asp-for="PhoneNumber">Số điện thoại</label>
-        <input asp-for="PhoneNumber" class="form-control" />
-    </div>
+        <div class="form-group">
+            <label asp-for="PhoneNumber">Số điện thoại</label>
+            <input asp-for="PhoneNumber" class="form-control" />
+        </div>
 
-    <div class="form-group">
-        <label asp-for="AvatarUrl">URL Avatar</label>
-        <input asp-for="AvatarUrl" class="form-control" />
-    </div>
+        <div class="form-group">
+            <label asp-for="AvatarUrl">URL Avatar</label>
+            <input asp-for="AvatarUrl" class="form-control" />
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Avatar">Chọn ảnh đại diện mới</label>
-        <input asp-for="Avatar" type="file" class="form-control-file" accept="image/*" onchange="previewAvatar()" />
-    </div>
+        <div class="form-group">
+            <label asp-for="Avatar">Chọn ảnh đại diện mới</label>
+            <input asp-for="Avatar" type="file" class="form-control-file" accept="image/*" onchange="previewAvatar()" />
+        </div>
 
-    <button type="submit" class="btn btn-primary">Cập nhật hồ sơ</button>
-</form>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Cập nhật hồ sơ</button>
+        </div>
+    </form>
 </div>
 <script>
     function previewAvatar() {
