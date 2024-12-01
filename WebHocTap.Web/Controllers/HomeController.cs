@@ -15,6 +15,7 @@ using X.PagedList;
 using WebHocTap.Web.Common.Mailer;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using System.Security.Claims;
+using WebHocTap.Web.ViewModels;
 
 namespace WebHocTap.Web.Controllers
 {
@@ -243,5 +244,28 @@ namespace WebHocTap.Web.Controllers
             }
             return View(data);
         }
+
+
+        public IActionResult ChoosePaymentMethod(int id)
+        {
+            var model = new PaymentMethodViewModel { CategorySubId = id };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ProcessPayment(PaymentMethodViewModel model)
+        {
+            switch (model.SelectedMethod)
+            {
+                case "PayPal":
+                    return RedirectToAction("PaypalCheckOut", new { id = model.CategorySubId });
+                case "CreditCard":
+                    // Xử lý thanh toán bằng thẻ tín dụng ở đây
+                    return RedirectToAction("CreditCardPayment", new { id = model.CategorySubId });
+                default:
+                    return RedirectToAction("ChoosePaymentMethod", new { id = model.CategorySubId });
+            }
+        }
+
     }
 }
