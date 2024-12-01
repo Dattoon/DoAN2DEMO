@@ -1,0 +1,26 @@
+﻿@model WebHocTap.Web.ViewModels.PaymentMethodViewModel
+
+@{
+    ViewData["Title"] = "Choose Payment Method";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row" style="padding:100px">
+
+    <h2>Choose Payment Method</h2>
+    <form asp-action="ProcessPayment" method="post">
+        <input type="hidden" asp-for="CategorySubId" />
+        <div class="form-group">
+            <label for="paymentMethod">Select Payment Method</label>
+            <select asp-for="SelectedMethod" class="form-control" id="paymentMethod">
+                @foreach (var method in Model.PaymentMethods)
+                {
+                    <option value="@method">@method</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+    </form>
+</div>

@@ -40,12 +40,13 @@
                         <input type="hidden" name="price" value="200000">
                         <input type="hidden" name="inventory_id" value="6">
                         <input class="form-control" id="inputQuantity" type="num" value="1 Month" name="quantity">
-                        <button class="btn" type="submit" asp-action="PaypalCheckOut" asp-controller="Home" asp-route-id="@Model.Id">
+                        <button class="btn" type="submit" asp-action="ChoosePaymentMethod" asp-controller="Home" asp-route-id="@Model.Id">
                             <i class="fa fa-credit-card"></i>
                             Extend
                         </button>
                     </div>
                 </form>
+
                 <p class="lead"></p>
                 <p>
                     @Model.Descripstion
