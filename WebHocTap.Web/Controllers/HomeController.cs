@@ -158,31 +158,113 @@ namespace WebHocTap.Web.Controllers
         public async Task<IActionResult> CheckoutSuccess(int id)
         {
             var subject = await _repo.FindAsync<CategorySub>(id);
-            var purchasedCourse = new PurchasedCourse();
-            purchasedCourse.IdUser = Convert.ToInt32(User.Claims.SingleOrDefault(c => c.Type.Contains(System.Security.Claims.ClaimTypes.NameIdentifier))?.Value);
-            purchasedCourse.IdSub = id;
-            purchasedCourse.Price=subject.Price;
-
-
-            // gửi mal cho khách hàng
-            var appMailSendercumstumner = new AppMailSender()
+            var purchasedCourse = new PurchasedCourse
             {
-                Name = "Bạn vừa mua 1 khóa học",
-                Subject = $"Bạn vừa mua 1 khóa học",
-                Content = "Bạn vừa mua 1 khóa học"
+                IdUser = Convert.ToInt32(User.Claims.SingleOrDefault(c => c.Type.Contains(ClaimTypes.NameIdentifier))?.Value),
+                IdSub = id,
+                Price = subject.Price
             };
-            var appMailRecivercustommer = new AppMailReciver()
+
+            // Nội dung email bằng HTML
+            var emailContent = string.Format(@"
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            .email-container {{
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                max-width: 600px;
+                margin: 0 auto;
+                border: 1px solid #ddd;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }}
+            .header {{
+                background-color: #007bff;
+                padding: 10px;
+                color: white;
+                text-align: center;
+            }}
+            .content {{
+                padding: 20px;
+            }}
+            .footer {{
+                background-color: #f4f4f4;
+                padding: 10px;
+                text-align: center;
+                font-size: 12px;
+                color: #666;
+            }}
+            .button {{
+                display: inline-block;
+                padding: 10px 20px;
+                margin-top: 10px;
+                background-color: #007bff;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+            }}
+            .highlight {{
+                color: #007bff;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class=""email-container"">
+            <div class=""header"">
+                <h1>Cảm ơn bạn đã mua khóa học!</h1>
+            </div>
+            <div class=""content"">
+                <p>Xin chào <strong>{0}</strong>,</p>
+                <p>Chúc mừng bạn đã đăng ký thành công khóa học <strong class=""highlight"">{1}</strong>!</p>
+                <p>Chi tiết khóa học:</p>
+                <ul>
+                    <li>Tên khóa học: <strong>{1}</strong></li>
+                    <li>Giá: <strong>{2}</strong> VND</li>
+                    <li>Ngày mua: <strong>{3}</strong></li>
+                </ul>
+                <p>Bạn có thể truy cập khóa học của mình bất cứ lúc nào bằng cách đăng nhập vào tài khoản của bạn. Chúng tôi hi vọng rằng bạn sẽ có trải nghiệm học tập tuyệt vời.</p>
+                <a href=""/Account/Login"" class=""button"">Truy cập khóa học</a>
+            </div>
+            <div class=""footer"">
+                <p>Xin cảm ơn,<br>Đội ngũ hỗ trợ của chúng tôi</p>
+                <p><a href=""https://www.example.com"" class=""highlight"">Trang chủ</a> | <a href=""https://www.example.com/contact"" class=""highlight"">Liên hệ</a></p>
+            </div>
+        </div>
+    </body>
+    </html>",
+            User.FindFirstValue(ClaimTypes.Name),
+            subject.NameCategorySub,
+            subject.Price?.ToString("#,##0"),
+            DateTime.Now.ToString("dd/MM/yyyy"));
+
+            var appMailSendercumstumner = new AppMailSender
+            {
+                Name = "Đội ngũ hỗ trợ",
+                Subject = "Cảm ơn bạn đã mua khóa học",
+                Content = emailContent
+            };
+
+            var appMailRecivercustommer = new AppMailReciver
             {
                 Email = User.FindFirstValue(ClaimTypes.Email),
-                Name = User.FindFirstValue(ClaimTypes.Name),
+                Name = User.FindFirstValue(ClaimTypes.Name)
             };
-            AppMailer _emailMapcustomeer = new AppMailer(_mailConfig);
-            _emailMapcustomeer.Sender = appMailSendercumstumner;
-            _emailMapcustomeer.Reciver = appMailRecivercustommer;
-            _emailMapcustomeer.Send();
+
+            var emailService = new AppMailer(_mailConfig)
+            {
+                Sender = appMailSendercumstumner,
+                Reciver = appMailRecivercustommer
+            };
+
+            emailService.Send();
+
             await _repo.AddAsync(purchasedCourse);
+
             return View();
         }
+
         public IActionResult CheckoutFail()
         {
             return View();
