@@ -10,6 +10,8 @@ using System.Security.Claims;
 using WebHocTap.Web.WebConfig.Const;
 using WebHocTap.Web.WebConfig;
 using System.Security.Cryptography;
+using WebHocTap.Web.Common.Mailer;
+using WebHocTap.Web.Common;
 
 namespace WebHocTap.Web.Controllers
 {
@@ -18,13 +20,108 @@ namespace WebHocTap.Web.Controllers
         private readonly IMapper _mapper;
         private readonly BaseReponsitory _repo;
         private readonly IWebHostEnvironment _host;
+        private readonly AppMailer _mailService;
 
-        public AccountController(BaseReponsitory repo, IMapper mapper, IWebHostEnvironment host) : base(repo)
+
+        public AccountController(BaseReponsitory repo, IMapper mapper, IWebHostEnvironment host, IConfiguration configuration) : base(repo)
         {
             _repo = repo;
             _mapper = mapper;
             _host = host;
+            var mailConfig = new AppMailConfiguration();
+            mailConfig.LoadFromConfig(configuration);
+            _mailService = new AppMailer(mailConfig);
+
         }
+
+        // Hiển thị form quên mật khẩu
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        // Xử lý yêu cầu quên mật khẩu
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordVM model)
+        {
+            var user = await _repo.GetOneAsync<User>(x => x.Gmail == model.Email);
+            if (user == null)
+            {
+                TempData["Mesg"] = "Email không tồn tại trong hệ thống.";
+                return View();
+            }
+
+            var token = GenerateResetToken();
+            var resetLink = Url.Action("ResetPassword", "Account", new { token, email = user.Gmail }, Request.Scheme);
+
+            var sender = new AppMailSender
+            {
+                Name = "Admin",
+                Subject = "Password Reset Request",
+                Content = $"Click the link to reset your password: <a href='{resetLink}'>Reset Password</a>"
+            };
+
+            var receiver = new AppMailReciver
+            {
+                Name = user.UserName,
+                Email = user.Gmail
+            };
+
+            await _mailService.SendEmailAsync(sender, receiver);
+
+            TempData["Mesg"] = "Email đặt lại mật khẩu đã được gửi.";
+            return RedirectToAction("Login");
+        }
+
+        // Hiển thị form đặt lại mật khẩu
+        [HttpGet]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            var model = new ResetPasswordVM { Token = token, Email = email };
+            return View(model);
+        }
+
+        // Xử lý yêu cầu đặt lại mật khẩu
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordVM model)
+        {
+            var user = await _repo.GetOneAsync<User>(x => x.Gmail == model.Email);
+            if (user == null || !VerifyResetToken(model.Token))
+            {
+                TempData["Mesg"] = "Yêu cầu không hợp lệ.";
+                return View(model);
+            }
+
+            var passwordHash = CreatePasswordHash(model.NewPassword);
+            user.PasswordHash = passwordHash.Hash;
+            user.PasswordSalt = passwordHash.Salt;
+
+            await _repo.UpdateAsync(user);
+            TempData["Mesg"] = "Mật khẩu đã được đặt lại thành công.";
+            return RedirectToAction("Login");
+        }
+
+        private string GenerateResetToken()
+        {
+            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+        }
+
+        private bool VerifyResetToken(string token)
+        {
+            return true; // Cần thêm logic để xác thực token nếu cần
+        }
+
+       
+        private (byte[] Hash, byte[] Salt) CreatePasswordHash(string password)
+        {
+            using (var hmac = new HMACSHA512())
+            {
+                var salt = hmac.Key;
+                var hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return (hash, salt);
+            }
+        }
+
 
         public IActionResult SignUp() => View();
 
@@ -241,15 +338,7 @@ namespace WebHocTap.Web.Controllers
             }
         }
 
-        private (byte[] Hash, byte[] Salt) CreatePasswordHash(string password)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                var salt = hmac.Key;
-                var hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return (hash, salt);
-            }
-        }
+       
 
 
 
@@ -261,5 +350,9 @@ namespace WebHocTap.Web.Controllers
             SetSuccessMesg("Đã đăng xuất");
             return RedirectToAction("Index", "Home");
         }
+
+
+
+
     }
 }
