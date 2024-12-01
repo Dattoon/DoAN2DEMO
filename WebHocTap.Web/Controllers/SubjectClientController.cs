@@ -6,7 +6,7 @@ using WebHocTap.Data.Reponsitory;
 using WebHocTap.Web.WebConfig;
 using WebHocTap.Data.Entites;
 
-namespace WebHocTap.Web.Controllers
+namespace WebHocTap.Web.Controllers 
 {
     public class SubjectClientController : BaseClientController
     {

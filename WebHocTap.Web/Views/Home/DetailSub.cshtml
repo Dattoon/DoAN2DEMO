@@ -4,28 +4,29 @@
     ViewData["Title"] = "DetailSub";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section styleclient{ 
+
+@section styleclient {
     <link href="~/clientLTE/css/detailsub.css" rel="stylesheet" />
 }
+
 <section class="product">
     <div class="container-product">
         <div class="row-product">
+            <!-- Product Image Section -->
             <div class="col-product-left">
-                <img src="/img/categorysub/@Model.pathImg" loading="lazy" alt="..." id="display-img" class="card-product">
-                <div class="minicard">
-                    <div class="colmini">
-                        <a href="" class="view-image active">
-                            <img src="/img/categorysub/@Model.pathImg" alt="" class="img-thumbnail">
-                        </a>
-                    </div>
-                </div>
+                <img src="/img/categorysub/@Model.pathImg" loading="lazy" alt="Product Image" id="display-img" class="card-product">
             </div>
+
+            <!-- Product Details Section -->
             <div class="col-product-right">
                 <h1>@Model.NameCategorySub</h1>
+
+                <!-- Price Section -->
                 <div class="price-card">
                     Giá: <span id="price">@Model.Price.Value.ToString("#,##0") VNĐ</span>
-                    <br>
                 </div>
+
+                <!-- Star Rating Section -->
                 <div class="star">
                     <span>(239)</span>
                     <a class="fa fa-star s1"></a>
@@ -33,24 +34,40 @@
                     <a class="fa fa-star s3"></a>
                     <a class="fa fa-star s4"></a>
                     <a class="fa fa-star s5"></a>
-
                 </div>
+                <!-- Thông tin chi tiết sản phẩm -->
+                <div class="product-info">
+                    <div class="info-item">
+                        <i class="fa fa-cogs"></i> Nhà sản xuất: ABC Corp
+                    </div>
+                    <div class="info-item">
+                        <i class="fa fa-certificate"></i> Chứng nhận: ISO 9001
+                    </div>
+                    <div class="info-item">
+                        <i class="fa fa-archive"></i> Số lượng còn lại: 50
+                    </div>
+                </div>
+
+                <!-- Add to Cart Form Section -->
                 <form action="" id="add-cart">
                     <div class="extend-card">
                         <input type="hidden" name="price" value="200000">
                         <input type="hidden" name="inventory_id" value="6">
-                        <input class="form-control" id="inputQuantity" type="num" value="1 Month" name="quantity">
+
+
+                        <!-- Add to Cart Button -->
                         <button class="btn" type="submit" asp-action="ChoosePaymentMethod" asp-controller="Home" asp-route-id="@Model.Id">
-                            <i class="fa fa-credit-card"></i>
-                            Extend
+                            <i class="fa fa-credit-card"></i> Extend
                         </button>
                     </div>
                 </form>
 
-                <p class="lead"></p>
-                <p>
-                    @Model.Descripstion
-                </p>
+                <!-- Product Description -->
+                <div class="product-description card-style">
+                    <i class="fa fa-info-circle"></i>
+                    <p>@Model.Descripstion</p>
+                </div>
+
             </div>
         </div>
     </div>
