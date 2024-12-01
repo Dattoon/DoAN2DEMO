@@ -1,0 +1,30 @@
+﻿@model WebHocTap.Web.ViewModels.Subject.LessonDetailVM
+
+@{
+    string videoId = null;
+    if (!string.IsNullOrEmpty(Model.VideoUrl))
+    {
+        var uri = new Uri(Model.VideoUrl);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        videoId = query["v"];
+    }
+    string embedUrl = !string.IsNullOrEmpty(videoId) ? $"https://www.youtube.com/embed/{videoId}" : null;
+}
+
+<div class="video-container">
+    @if (!string.IsNullOrEmpty(embedUrl))
+    {
+        <iframe width="560" height="315" src="@embedUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    }
+    else
+    {
+        <p>Không thể tải video từ YouTube. Vui lòng kiểm tra kết nối của bạn hoặc thử lại sau.</p>
+    }
+</div>
+
+<div class="js-content no-copy">
+    @foreach (var lesson in Model.lessons)
+    {
+        @Html.Raw(lesson.Content)
+    }
+</div>

@@ -34,7 +34,7 @@
             </div>
 
             <!-- Mid Col -->
-            <div class="midcol-lession js-content no-copy">
+            <div class="midcol-lession js-content no-copy" id="lesson-content">
                 @if (!string.IsNullOrEmpty(embedUrl))
                 {
                     <div class="video-container">
@@ -93,12 +93,27 @@
 @section styleclient {
     <link href="~/clientLTE/css/lession.css" rel="stylesheet" />
 }
-
 @section scriptClient {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="~/clientLTE/js/detaillesson.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
+            $('.js-chapter').click(function () {
+                var chapterId = $(this).data('id');
+
+                $.ajax({
+                    url: '/SubjectClient/Lesson/' + chapterId,
+                    type: 'GET',
+                    success: function (data) {
+                        $('.midcol-lession').html(data);
+                        loadComments();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+
             $('#comment-form').submit(function (event) {
                 event.preventDefault();
                 console.log('Form submitted');

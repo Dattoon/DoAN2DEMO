@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebHocTap.Data.Reponsitory;
 using WebHocTap.Web.WebConfig;
 using WebHocTap.Data.Entites;
+using WebHocTap.Web.Common;
 
 namespace WebHocTap.Web.Controllers 
 {
@@ -48,35 +49,36 @@ namespace WebHocTap.Web.Controllers
 
         public async Task<IActionResult> Lesson(int id)
         {
+            var chapter = await _repo.FindAsync<Chapter>(id);
+            var lessons = _repo.GetAll<Lesson>(x => x.IdChapter == id).OrderBy(x => x.Id).ToList();
+            var subject = await _repo.FindAsync<Subject>(chapter.IdSubject ?? 0);
+
+            var lesson = lessons.FirstOrDefault();
+            string videoUrl = lesson?.Video;
+
             var data = new LessonDetailVM
             {
-                lessons = _repo.GetAll<Lesson>(x => x.IdChapter == id).OrderBy(x => x.Id).ToList(),
+                lessons = lessons,
+                chapters = _repo.GetAll<Chapter>(x => x.IdSubject == chapter.IdSubject).OrderBy(x => x.Id).ToList(),
+                subject = subject,
+                VideoUrl = videoUrl,
+                Comments = _mapper.Map<List<CommentViewModel>>(await _commentRepository.GetCommentsByLessonIdAsync(id)),
+                IsTest = _repo.GetAll<Test>(x => x.IdChapter == id).Any()
             };
 
-            var chapter = await _repo.FindAsync<Chapter>(id);
-            data.chapters = _repo.GetAll<Chapter>(x => x.IdSubject == chapter.IdSubject).OrderBy(x => x.Id).ToList();
-
-            int idsub = Convert.ToInt32(chapter.IdSubject);
-            data.subject = await _repo.FindAsync<Subject>(idsub);
-
-            var test = _repo.GetAll<Test>(x => x.IdChapter == id).ToList();
-            data.IsTest = test.Count > 0;
-
-            // Lấy danh sách bình luận
-            data.Comments = _mapper.Map<List<CommentViewModel>>(await _commentRepository.GetCommentsByLessonIdAsync(id));
-
-            // Cung cấp URL video YouTube từ dữ liệu bài học
-            var lesson = data.lessons.FirstOrDefault();
-            if (lesson != null)
+            if (Request.IsAjaxRequest())
             {
-                data.VideoUrl = lesson.Video;
+                return PartialView("_ChapterContent", data);
             }
 
             ViewBag.IdChapter = id;
-            ViewBag.LessonId = data.lessons.FirstOrDefault()?.Id;
+            ViewBag.LessonId = lessons.FirstOrDefault()?.Id;
 
             return View(data);
         }
+
+
+
 
 
 
