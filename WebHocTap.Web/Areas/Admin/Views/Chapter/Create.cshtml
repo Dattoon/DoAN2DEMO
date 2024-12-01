@@ -15,11 +15,12 @@
                 <input asp-for="NameChapter" class="form-control" />
                 <span asp-validation-for="NameChapter" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="visibility:hidden;">
                 <label asp-for="IdSubject" class="control-label"></label>
                 <input asp-for="IdSubject" class="form-control" readonly />
                 <span asp-validation-for="IdSubject" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Thêm chương mới" class="btn btn-primary" />
             </div>
