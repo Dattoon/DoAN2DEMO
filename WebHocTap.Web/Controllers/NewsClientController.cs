@@ -34,5 +34,7 @@ namespace WebHocTap.Web.Controllers
             var data = await _repo.FindAsync<News>(id);
             return View(data);
         }
+
+        public async Task<IActionResult> ByCategory(int id) { var newsList = _repo.GetAll<News>().Where(n => n.IdCategoryNew == id).ToList(); return View(newsList); }
     }
 }

@@ -1,0 +1,6 @@
+﻿@model IEnumerable<WebHocTap.Data.Entites.CategoryNew>
+
+@foreach (var category in Model)
+{
+    <a asp-action="ByCategory" asp-controller="NewsClient" asp-route-id="@category.Id">@category.NameCategoryNew</a>
+}

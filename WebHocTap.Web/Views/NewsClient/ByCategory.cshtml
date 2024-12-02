@@ -1,0 +1,112 @@
+﻿@model IEnumerable<WebHocTap.Data.Entites.News>
+
+@{
+    ViewData["Title"] = "Danh Mục Tin Tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styleclient {
+    <style>
+        #contents {
+            padding-bottom: 24px;
+        }
+
+            #contents > div.clearfix:first-child {
+                width: 940px;
+                padding: 30px 10px 0;
+            }
+
+            #contents img {
+                border: 1px solid rgba(231, 231, 231, 0.8);
+            }
+
+        .clearfix {
+            width: 960px;
+            margin: 0 auto;
+        }
+
+            .clearfix:after {
+                clear: both;
+                content: "";
+                display: block;
+                line-height: 0;
+                height: 1%;
+                visibility: hidden;
+            }
+
+        .main > .section {
+            background-position: left bottom;
+            background-repeat: repeat-x;
+            width: 600px;
+            margin-bottom: 16px;
+            margin-left: -28px;
+            padding-left: 30px;
+        }
+
+            .main > .section ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+                .main > .section ul li {
+                    display: flex;
+                    align-items: center;
+                    background: #f9f9f9;
+                    margin-bottom: 10px;
+                    padding: 10px;
+                    border-radius: 8px;
+                    transition: background 0.3s;
+                }
+
+                    .main > .section ul li:hover {
+                        background: #eaeaea;
+                    }
+
+                    .main > .section ul li .frame4 {
+                        flex-shrink: 0;
+                        margin-right: 20px;
+                    }
+
+                    .main > .section ul li p {
+                        margin: 0;
+                    }
+
+                        .main > .section ul li p b {
+                            display: block;
+                            text-transform: uppercase;
+                        }
+    </style>
+}
+
+<div class="container" style="padding-top: 135px;">
+    <div class="main">
+        <div class="section">
+            <ul id="ul-body">
+                @if (!Model.Any())
+                {
+                    <p>Không tìm thấy kết quả nào phù hợp với từ khóa tìm kiếm của bạn.</p>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <div class="frame4">
+                                <div class="box">
+                                    <img src="~/img/news/@item.pathImg" alt="Img" height="94" width="90">
+                                </div>
+                            </div>
+                            <div>
+                                <a style="cursor:pointer; font-weight:bold; float:none;" asp-route-id="@item.Id" asp-action="DetailNews" asp-controller="NewsClient">
+                                    @item.Title
+                                </a>
+                                <p>@Html.Raw(@item.Description)</p>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>

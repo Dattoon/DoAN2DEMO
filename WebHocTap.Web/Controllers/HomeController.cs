@@ -348,6 +348,7 @@ namespace WebHocTap.Web.Controllers
                     return RedirectToAction("ChoosePaymentMethod", new { id = model.CategorySubId });
             }
         }
+        public IActionResult GetNewsCategories() { var categories = _repo.GetAll<CategoryNew>().Select(c => new { c.Id, c.NameCategoryNew }).ToList(); return Json(categories); }
 
     }
 }

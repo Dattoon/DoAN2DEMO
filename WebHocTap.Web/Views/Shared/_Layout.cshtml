@@ -22,7 +22,6 @@
             <div class="form-group">
                 <input class="form-control search-field" type="search" name="query" id="search-field" placeholder="Search" value="@ViewBag.Query">
             </div>
-            
         </form>
         <div class="navigation">
             <ul class="nav-list">
@@ -34,6 +33,15 @@
                     <div class="dropdown-content">
                         <a asp-action="ListCateSubFree" asp-controller="Home" class="dropdown-item">Khóa học miễn phí</a>
                         <a asp-action="ListCateSubPay" asp-controller="Home" class="dropdown-item">Khóa học trả phí</a>
+                    </div>
+                </li>
+                <!-- Dropdown danh mục tin tức -->
+                <li class="nav-item dropdown p-1">
+                    <button class="dropbtn">
+                        <i class="fa fa-th-list" aria-hidden="true"></i> Danh mục tin tức <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-content" id="news-categories-dropdown">
+                        <!-- Nội dung sẽ được load bằng jQuery Ajax -->
                     </div>
                 </li>
                 @if (User.Identity.IsAuthenticated)
@@ -63,7 +71,6 @@
             </ul>
             <img id="menu-btn" src="images/menu.png" alt="Menu">
         </div>
-
     </nav>
 
     <!-- Home -->
@@ -125,5 +132,34 @@
     <script src="~/clientLTE/js/function.js" asp-append-version="true"></script>
     @RenderSection("scriptClient", false)
     @RenderSection("Scripts", required: false)
+
+    <script>
+        /* Menu Button */
+        $('#menu-btn').click(function () {
+            $('nav .navigation ul').addClass('active');
+        });
+        $('#menu-close').click(function () {
+            $('nav .navigation ul').removeClass('active');
+        });
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("GetNewsCategories", "Home")',
+                method: 'GET',
+                success: function (data) {
+                    var dropdown = $('#news-categories-dropdown');
+                    dropdown.empty();
+                    $.each(data, function (index, item) {
+                        var url = '@Url.Action("ByCategory", "NewsClient", new { id = "__id__" })';
+                        url = url.replace("__id__", item.id);
+                        dropdown.append('<a href="' + url + '">' + item.nameCategoryNew + '</a>');
+                    });
+                },
+                error: function () {
+                    console.error("Error loading categories.");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
