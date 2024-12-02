@@ -20,6 +20,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BaseReponsitory>();
 builder.Services.AddServiceRepositories();
 builder.Services.AddScoped<CommentRepository>();
+builder.Services.AddServiceRepositories();
+builder.Services.AddScoped<SearchRepository>();
 
 //câu hình đăng nhập
 builder.Services.AddAuthentication(AppConst.COOKIES_AUTH)

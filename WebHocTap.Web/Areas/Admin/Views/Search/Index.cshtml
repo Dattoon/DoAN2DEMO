@@ -1,0 +1,33 @@
+﻿@model WebHocTap.Web.ViewModels.Subject.SearchViewModel
+
+@{
+    ViewData["Title"] = "Tìm kiếm";
+}
+
+<h2>Tìm kiếm</h2>
+
+<form asp-action="Search" method="post">
+    <div>
+        <label for="Keyword">Từ khoá:</label>
+        <input type="text" name="Keyword" id="Keyword" />
+        <button type="submit">Tìm kiếm</button>
+    </div>
+</form>
+
+@if (Model.Results != null && Model.Results.Any())
+{
+    <h3>Kết quả tìm kiếm</h3>
+    <ul>
+        @foreach (var result in Model.Results)
+        {
+            <li>
+                <a href="@result.DetailsUrl"><strong>@result.Name</strong></a>
+              
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Không có kết quả nào.</p>
+}
