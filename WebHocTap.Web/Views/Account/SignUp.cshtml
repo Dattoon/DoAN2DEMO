@@ -28,20 +28,19 @@
                             <div class="container-col">
                                 <div class="container-row">
                                     <div class="box">
-                                        <div id="message-container">
-                                            @if (TempData["Mesg"] != null)
-                                            {
-                                                <div class="alert alert-warning">@TempData["Mesg"]</div>
-                                            }
-                                        </div>
                                         <div class="card">
+                                            <div id="message-container">
+                                                @if (TempData["Mesg"] != null)
+                                                {
+                                                    <div class="alert alert-warning">@TempData["Mesg"]</div>
+                                                }
+                                            </div>
                                             <h1 class="text-title">
                                                 <a asp-action="Index" asp-controller="Home">
-                                                    <img src="" alt="">
+                                                    <img src="/clientLTE/images/Logo1.png" />
                                                 </a>
-                                                <a href="" class="closeDiv" title="close window"><i class="fal fa-xmark-large"></i></a>
                                             </h1>
-                                            <div class="clear"></div>
+                                            
                                             <div class="divLogin">
                                                 <form asp-action="SignUp" method="post" class="loginForm" id="loginForm" novalidate="novalidate">
                                                     <div class="input-box">
