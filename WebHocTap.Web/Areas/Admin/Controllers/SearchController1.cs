@@ -53,14 +53,7 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
                     })
                     .ToList());
 
-                model.Results.AddRange(_searchRepo.SearchLesson(model.Keyword)
-                    .Select(x => new SearchResultViewModel
-                    {
-                        Id = x.Id,
-                        Name = x.Content,
-                        DetailsUrl = Url.Action("Index", "Lesson", new { area = "Admin", id = x.Id }) // URL chi tiết đến LessonController
-                    })
-                    .ToList());
+                
 
                 model.Results.AddRange(_searchRepo.SearchNews(model.Keyword)
                     .Select(x => new SearchResultViewModel

@@ -6,13 +6,6 @@
 
 <h2>Tìm kiếm</h2>
 
-<form asp-action="Search" method="post">
-    <div>
-        <label for="Keyword">Từ khoá:</label>
-        <input type="text" name="Keyword" id="Keyword" />
-        <button type="submit">Tìm kiếm</button>
-    </div>
-</form>
 
 @if (Model.Results != null && Model.Results.Any())
 {
