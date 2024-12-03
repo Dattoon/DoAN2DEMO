@@ -225,7 +225,9 @@ namespace WebHocTap.Web.Controllers
                     <li>Ngày mua: <strong>{3}</strong></li>
                 </ul>
                 <p>Bạn có thể truy cập khóa học của mình bất cứ lúc nào bằng cách đăng nhập vào tài khoản của bạn. Chúng tôi hi vọng rằng bạn sẽ có trải nghiệm học tập tuyệt vời.</p>
-                <a href=""/Account/Login"" class=""button"">Truy cập khóa học</a>
+                <a href=""https://localhost:7181/"" class=""button"">Truy cập</a>
+
+               
             </div>
             <div class=""footer"">
                 <p>Xin cảm ơn,<br>Đội ngũ hỗ trợ của chúng tôi</p>

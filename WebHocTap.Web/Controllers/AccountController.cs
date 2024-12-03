@@ -161,7 +161,7 @@ namespace WebHocTap.Web.Controllers
                 var user = _mapper.Map<User>(model);
                 user.IdRole = 2;
                 await _repo.AddAsync(user);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Home");
             }
             catch (Exception ex)
             {
