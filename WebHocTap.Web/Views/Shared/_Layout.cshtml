@@ -23,6 +23,9 @@
                 <input class="form-control search-field" type="search" name="query" id="search-field" placeholder="Search" value="@ViewBag.Query">
             </div>
         </form>
+        <div id="wrapper">
+            <input type="checkbox" name="" class="switch-toggle" id="light-dark">
+        </div>
         <div class="navigation">
             <ul class="nav-list">
                 <li class="nav-item"><a asp-action="Index" asp-controller="NewsClient"><i class="fas fa-newspaper"></i> Tin tức</a></li>
@@ -159,6 +162,12 @@
                     console.error("Error loading categories.");
                 }
             });
+        });
+    </script>
+    <script>
+        var checkbox_toggle = document.getElementById('light-dark');
+        checkbox_toggle.addEventListener('change', function () {
+            document.body.classList.toggle('dark');
         });
     </script>
 </body>
