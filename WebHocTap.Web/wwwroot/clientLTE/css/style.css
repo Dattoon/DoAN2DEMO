@@ -27,13 +27,12 @@ h6 {
     font-size: 1.1rem;
     color: rgb(24, 24, 49);
 }
-
 body.dark {
     background: linear-gradient(135deg, #1a1a1a, #333333, #444444);
     background-size: 200% 200%;
-    animation: gradientMove 5s infinite;
-    color: white;
+    animation: gradientMove 5s infinite, twinkleEffect 2s infinite alternate;
 }
+
 @keyframes gradientMove {
     0% {
         background-position: 0% 50%;
@@ -47,6 +46,24 @@ body.dark {
         background-position: 0% 50%;
     }
 }
+
+@keyframes twinkleEffect {
+    0% {
+        background-color: #1a1a1a;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    }
+
+    50% {
+        background-color: #333333;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    100% {
+        background-color: #444444;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+}
+
 #wrapper {
     display: flex;
     justify-content: center;
@@ -82,9 +99,10 @@ body.dark {
         background: #749dd6;
     }
 
-        .switch-toggle:checked:before {
+        .switch-toggle:checked::before {
             left: 40px;
         }
+    
 /* Nagivation */
 nav {
     position: fixed;

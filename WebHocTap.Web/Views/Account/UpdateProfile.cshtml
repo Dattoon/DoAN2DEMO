@@ -2,40 +2,52 @@
 <head>
     <link href="./clientLTE/css/UpdateProfile.css" rel="stylesheet" />
 </head>
-<div>
-    <form asp-action="UpdateProfile" method="post" enctype="multipart/form-data">
-        <div class="form-group text-center">
-            <label>Ảnh đại diện hiện tại</label>
-            <img id="avatarPreview" src="@Model.AvatarUrl" alt="Avatar" class="img-thumbnail" />
-        </div>
+<div class="container" style="padding-top:150px;padding-bottom:100px">
+    <div class="card shadow-sm rounded-lg">
+        <div class="card-body">
+            <form asp-action="UpdateProfile" method="post" enctype="multipart/form-data">
 
-        <input asp-for="UserId" type="hidden" />
+                <!-- Avatar current preview -->
+                <div class="form-group text-center">
+                    <label for="avatarPreview" class="form-label">Ảnh đại diện hiện tại</label>
+                    <img id="avatarPreview" src="@Model.AvatarUrl" alt="Avatar" class="img-fluid rounded-circle border" />
+                </div>
 
-        <div class="form-group">
-            <label asp-for="Gmail">Email</label>
-            <input asp-for="Gmail" class="form-control" />
-        </div>
+                <input asp-for="UserId" type="hidden" />
 
-        <div class="form-group">
-            <label asp-for="PhoneNumber">Số điện thoại</label>
-            <input asp-for="PhoneNumber" class="form-control" />
-        </div>
+                <!-- Gmail input -->
+                <div class="form-group">
+                    <label asp-for="Gmail" class="form-label">Email</label>
+                    <input asp-for="Gmail" class="form-control form-control-lg" placeholder="Nhập email của bạn" />
+                </div>
 
-        <div class="form-group">
-            <label asp-for="AvatarUrl">URL Avatar</label>
-            <input asp-for="AvatarUrl" class="form-control" />
-        </div>
+                <!-- Phone number input -->
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="form-label">Số điện thoại</label>
+                    <input asp-for="PhoneNumber" class="form-control form-control-lg" placeholder="Nhập số điện thoại của bạn" />
+                </div>
 
-        <div class="form-group">
-            <label asp-for="Avatar">Chọn ảnh đại diện mới</label>
-            <input asp-for="Avatar" type="file" class="form-control-file" accept="image/*" onchange="previewAvatar()" />
-        </div>
+                <!-- Avatar URL input -->
+                <div class="form-group">
+                    <label asp-for="AvatarUrl" class="form-label">URL Avatar</label>
+                    <input asp-for="AvatarUrl" class="form-control form-control-lg" placeholder="Nhập URL ảnh đại diện" />
+                </div>
 
-        <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary">Cập nhật hồ sơ</button>
+                <!-- Avatar file upload -->
+                <div class="form-group">
+                    <label asp-for="Avatar" class="form-label">Chọn ảnh đại diện mới</label>
+                    <input asp-for="Avatar" type="file" class="form-control-file" accept="image/*" onchange="previewAvatar()" />
+                </div>
+
+                <!-- Submit button -->
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Cập nhật hồ sơ</button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
+
 <script>
     function previewAvatar() {
         const file = document.querySelector('input[type="file"]').files[0];

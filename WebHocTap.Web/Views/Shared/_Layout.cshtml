@@ -165,9 +165,46 @@
         });
     </script>
     <script>
+        // Hàm để lưu trạng thái chế độ tối vào cookie
+        function setDarkModeCookie(value) {
+            document.cookie = "darkMode=" + value + "; path=/; max-age=31536000"; // Lưu trong 1 năm
+        }
+
+        // Hàm để đọc trạng thái chế độ tối từ cookie
+        function getDarkModeCookie() {
+            const name = "darkMode=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        // Lấy đối tượng checkbox
         var checkbox_toggle = document.getElementById('light-dark');
+
+        // Kiểm tra trạng thái từ cookie và áp dụng nó
+        if (getDarkModeCookie() === "true") {
+            document.body.classList.add('dark');
+            checkbox_toggle.checked = true;
+        }
+
+        // Lắng nghe sự kiện thay đổi của checkbox và lưu trạng thái vào cookie
         checkbox_toggle.addEventListener('change', function () {
-            document.body.classList.toggle('dark');
+            if (checkbox_toggle.checked) {
+                document.body.classList.add('dark');
+                setDarkModeCookie("true");
+            } else {
+                document.body.classList.remove('dark');
+                setDarkModeCookie("false");
+            }
         });
     </script>
 </body>
