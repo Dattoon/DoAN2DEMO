@@ -21,9 +21,9 @@ namespace WebHocTap.Web.WebConfig
 {
     public class MapperConfig : Profile
     {
-
         public MapperConfig()
         {
+            // Các cấu hình ánh xạ hiện có...
             CreateMap<CategoryNew, AddorUpdateCategoryNewVM>().ReverseMap();
             CreateMap<News, AddorUpdateNewsVM>().ReverseMap();
             CreateMap<CategorySub, AddorUpdateCategorySubVM>().ReverseMap();
@@ -34,8 +34,13 @@ namespace WebHocTap.Web.WebConfig
             CreateMap<User, SignUpVM>().ReverseMap();
             CreateMap<User, ProfileUpdateVM>().ReverseMap();
 
-            // Add mappings for Comment and CommentVM
-            CreateMap<Comemt, CommentViewModel>().ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName)); CreateMap<CommentViewModel, Comemt>();
+         
+            CreateMap<Test, AddorEditQAVM>().ReverseMap();
+
+            // Add mappings for Comment and CommentViewModel
+            CreateMap<Comemt, CommentViewModel>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
+            CreateMap<CommentViewModel, Comemt>();
         }
 
         public static MapperConfiguration RoleIndexConf = new(mapper =>
@@ -46,8 +51,8 @@ namespace WebHocTap.Web.WebConfig
         public static MapperConfiguration UserIndexConf = new(mapper =>
         {
             mapper.CreateMap<User, ListUserItemVM>()
-            .ForMember(uItem => uItem.RoleName,
-            otps => otps.MapFrom(uE => uE.role.RoleName));
+                .ForMember(uItem => uItem.RoleName,
+                otps => otps.MapFrom(uE => uE.role.RoleName));
         });
 
         public static MapperConfiguration LoginConf = new(mapper =>
@@ -58,7 +63,6 @@ namespace WebHocTap.Web.WebConfig
                     uEntity => string.Join(',', uEntity.role.rolePermissions.Select(p => p.MStPermissionId))));
         });
 
-
         public static MapperConfiguration CategoryNewIndexConf = new(mapper =>
         {
             mapper.CreateMap<CategoryNew, ListCategoryItemVM>();
@@ -67,8 +71,8 @@ namespace WebHocTap.Web.WebConfig
         public static MapperConfiguration NewsIndexConf = new(mapper =>
         {
             mapper.CreateMap<News, ListNewsItemVM>()
-            .ForMember(uItem => uItem.IdCategoryNew,
-            otps => otps.MapFrom(uE => uE.categoryNew.NameCategoryNew));
+                .ForMember(uItem => uItem.IdCategoryNew,
+                otps => otps.MapFrom(uE => uE.categoryNew.NameCategoryNew));
         });
 
         public static MapperConfiguration CategorySubIndexConf = new(mapper =>
@@ -79,8 +83,8 @@ namespace WebHocTap.Web.WebConfig
         public static MapperConfiguration SubIndexConf = new(mapper =>
         {
             mapper.CreateMap<Subject, ListSubItemVM>()
-            .ForMember(uItem => uItem.CategorySub,
-            otps => otps.MapFrom(uE => uE.categorySub.NameCategorySub));
+                .ForMember(uItem => uItem.CategorySub,
+                otps => otps.MapFrom(uE => uE.categorySub.NameCategorySub));
         });
 
         public static MapperConfiguration ChapterIndexConf = new(mapper =>
@@ -116,10 +120,10 @@ namespace WebHocTap.Web.WebConfig
         public static MapperConfiguration PurchasedCourseIndexConf = new(mapper =>
         {
             mapper.CreateMap<PurchasedCourse, ListPurchasedCourseItem>()
-            .ForMember(uItem => uItem.UserName,
-            otps => otps.MapFrom(uE => uE.user.UserName))
-            .ForMember(uItem => uItem.SubName,
-            otps => otps.MapFrom(uE => uE.subject.NameCategorySub));
+                .ForMember(uItem => uItem.UserName,
+                otps => otps.MapFrom(uE => uE.user.UserName))
+                .ForMember(uItem => uItem.SubName,
+                otps => otps.MapFrom(uE => uE.subject.NameCategorySub));
         });
     }
 }

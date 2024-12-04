@@ -34,6 +34,7 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
             return View(data);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Create(AddorEditQAVM model)
         {
@@ -44,6 +45,10 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
             }
 
             var test = _mapper.Map<Test>(model);
+
+            // Loại bỏ giá trị Id để tránh lỗi
+            test.Id = 0;
+
             var answers = model.AnswerFail.Where(item => !string.IsNullOrEmpty(item))
                                            .Select(item => new Answer { Description = item, IsSucces = false })
                                            .ToList();
@@ -57,8 +62,9 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
             SetSuccessMesg("Thêm câu hỏi thành công");
             return RedirectToAction(nameof(Index), new { id = test.IdChapter });
         }
+    
 
-        public async Task<IActionResult> Detail(int id)
+    public async Task<IActionResult> Detail(int id)
         {
             var data = await _repo.GetOneAsync<Test, DetailTest>(id, t => new DetailTest
             {
