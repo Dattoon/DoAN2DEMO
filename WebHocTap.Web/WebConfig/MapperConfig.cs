@@ -34,8 +34,11 @@ namespace WebHocTap.Web.WebConfig
             CreateMap<User, SignUpVM>().ReverseMap();
             CreateMap<User, ProfileUpdateVM>().ReverseMap();
 
-         
+            CreateMap<User, EditUserVM>().ReverseMap();
             CreateMap<Test, AddorEditQAVM>().ReverseMap();
+            CreateMap<User, AddUserVM>().ReverseMap(); 
+            CreateMap<User, EditUserVM>().ReverseMap(); 
+            CreateMap<User, ListUserItemVM>().ReverseMap();
 
             // Add mappings for Comment and CommentViewModel
             CreateMap<Comemt, CommentViewModel>()
@@ -74,6 +77,7 @@ namespace WebHocTap.Web.WebConfig
                 .ForMember(uItem => uItem.IdCategoryNew,
                 otps => otps.MapFrom(uE => uE.categoryNew.NameCategoryNew));
         });
+            
 
         public static MapperConfiguration CategorySubIndexConf = new(mapper =>
         {

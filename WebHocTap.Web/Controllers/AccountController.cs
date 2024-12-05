@@ -196,6 +196,7 @@ namespace WebHocTap.Web.Controllers
                 return View();
             }
 
+            // Thêm xử lý cho các giá trị null
             var claims = new List<Claim>
     {
         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -220,6 +221,7 @@ namespace WebHocTap.Web.Controllers
             SetSuccessMesg("Đăng nhập thành công");
             return RedirectToAction(nameof(Index), "Home");
         }
+
 
 
         private string UploadImgAndReturnPath(IFormFile file, string childFolder = "/img/", bool saveInWwwRoot = true)

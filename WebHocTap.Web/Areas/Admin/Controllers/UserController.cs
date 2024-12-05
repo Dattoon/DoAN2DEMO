@@ -119,9 +119,11 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
             }
             catch (Exception)
             {
+                SetErrorMesg("Xóa tài khoản không thành công");
                 return RedirectToAction(nameof(Index));
             }
         }
+
 
         public async Task<IActionResult> Logout()
         {
