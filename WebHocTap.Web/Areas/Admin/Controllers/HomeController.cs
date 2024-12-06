@@ -69,5 +69,49 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
                 return View(data);
             }
         }
+        [HttpGet]
+        public IActionResult GetRevenueData()
+        {
+            var revenueData = _repo.GetAll<PurchasedCourse>()
+                                   .AsEnumerable() // Chuyển về LINQ to Objects
+                                   .GroupBy(x => x.CreateAt.Value.Date) // Sử dụng .Date trong LINQ to Objects
+                                   .Select(g => new
+                                   {
+                                       Date = g.Key.ToString("yyyy-MM-dd"), // Chuyển ngày thành chuỗi
+                                       TotalRevenue = g.Sum(x => x.Price ?? 0) // Tính tổng doanh thu
+                                   })
+                                   .OrderBy(x => x.Date)
+                                   .ToList();
+
+            return Json(revenueData);
+        }
+        [HttpGet]
+        public IActionResult GetMonthlyRevenueData()
+        {
+            // Nhóm dữ liệu theo tháng và tính tổng doanh thu
+            var monthlyRevenueData = _repo.GetAll<PurchasedCourse>()
+                                          .Where(x => x.CreateAt.HasValue) // Loại bỏ null
+                                          .GroupBy(x => new { x.CreateAt.Value.Year, x.CreateAt.Value.Month }) // Nhóm theo năm và tháng
+                                          .Select(g => new
+                                          {
+                                              Year = g.Key.Year,
+                                              Month = g.Key.Month,
+                                              TotalRevenue = g.Sum(x => x.Price ?? 0) // Tổng doanh thu
+                                          })
+                                          .OrderBy(x => x.Year).ThenBy(x => x.Month) // Sắp xếp theo năm và tháng
+                                          .ToList();
+
+            // Thực hiện định dạng chuỗi sau khi lấy dữ liệu về
+            var result = monthlyRevenueData.Select(x => new
+            {
+                Month = $"{x.Year}-{x.Month:D2}", // Định dạng yyyy-MM
+                TotalRevenue = x.TotalRevenue
+            }).ToList();
+
+            return Json(result);
+        }
+
+
+
     }
 }

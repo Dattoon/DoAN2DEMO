@@ -5,5 +5,6 @@
         public int DonHangBanDuocHomNay { get; set; }
         public decimal EarningsToday { get; set; }
         public decimal totalrevenue { get; set; }
+        public DateTime CreateAt { get; set; }
     }
 }
