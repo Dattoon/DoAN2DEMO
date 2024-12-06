@@ -1,0 +1,100 @@
+﻿/* Container styling */
+.news-container {
+    padding-top: 50px;
+    width: 100%;
+    max-width: 1000px; /* Giảm kích thước của container tổng thể */
+    margin: 0 auto;
+}
+
+/* Main section styling */
+.news-main {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Section that holds the news items */
+.news-section {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styling for each news item */
+.news-item {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    margin-bottom: 10px; /* Giảm khoảng cách giữa các tin tức */
+    padding: 12px 15px; /* Giảm padding để tin tức gọn gàng hơn */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
+}
+
+    /* Hover effect */
+    .news-item:hover {
+        transform: translateY(-5px);
+    }
+
+/* Wrapper to make sure image and content are aligned properly */
+.news-item-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+/* Image styling: Chiếm 1/4 chiều rộng và tăng kích thước hình ảnh */
+.news-image {
+    width: 140px; /* Tăng kích thước hình ảnh */
+    height: 140px; /* Cân đối với chiều rộng */
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0; /* Đảm bảo hình ảnh không bị co lại */
+}
+
+/* Content section containing the title and description: Chiếm 3/4 chiều rộng */
+.news-content {
+    margin-left: 15px; /* Giảm khoảng cách giữa hình ảnh và nội dung */
+    flex-grow: 1; /* Phần nội dung sẽ chiếm phần còn lại */
+}
+
+/* Title styling */
+.news-title {
+    font-size: 18px; /* Giảm kích thước chữ tiêu đề */
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px; /* Giảm khoảng cách dưới tiêu đề */
+}
+
+    /* Hiệu ứng hover khi di chuột vào tiêu đề */
+    .news-title:hover {
+        color: #ff4d4d;
+    }
+
+/* Description text styling */
+.news-description {
+    font-size: 13px; /* Giảm kích thước mô tả */
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .news-item-wrapper {
+        flex-direction: column; /* Chuyển sang dạng cột khi màn hình nhỏ */
+    }
+
+    .news-image {
+        width: 100%; /* Hình ảnh sẽ chiếm toàn bộ chiều rộng */
+        height: auto;
+    }
+
+    .news-content {
+        margin-left: 0;
+        width: 100%; /* Nội dung chiếm toàn bộ chiều rộng */
+    }
+}
