@@ -174,7 +174,7 @@ namespace WebHocTap.Web.Controllers
 
 
 
-        public IActionResult Login() => PartialView();
+        public IActionResult Login() => View();
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginClientVM model)
