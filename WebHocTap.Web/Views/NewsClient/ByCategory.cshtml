@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<WebHocTap.Data.Entites.News>
-
+@using X.PagedList
 @{
     ViewData["Title"] = "Danh Mục Tin Tức";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <head>
-    <link href="./clientLTE/css/News.css" rel="stylesheet" />
+    <link href="~/clientLTE/css/News.css" rel="stylesheet" />
 </head>
 <div class="news-container" style="padding-top: 135px;">
     <div class="news-main">
@@ -21,11 +21,9 @@
                     {
                         <li class="news-item">
                             <div class="news-item-wrapper">
-                                <!-- Image box -->
                                 <div class="news-box">
                                     <img src="~/img/news/@item.pathImg" alt="Img" class="news-image">
                                 </div>
-                                <!-- Content (Title + Description) -->
                                 <div class="news-content">
                                     <a class="news-title" asp-route-id="@item.Id" asp-action="DetailNews" asp-controller="NewsClient">
                                         @item.Title
