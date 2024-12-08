@@ -242,3 +242,23 @@ const getSucces = () => {
     }
     return ararysucces;
 }
+document.addEventListener("DOMContentLoaded", function () {
+    // Lấy tất cả các phần tử có chứa các câu trả lời
+    const answerBoxes = document.querySelectorAll(".answer-box");
+
+    answerBoxes.forEach((box) => {
+        // Lấy tất cả các label (câu trả lời) bên trong hộp
+        const answers = Array.from(box.querySelectorAll("label"));
+
+        // Sáo trộn các câu trả lời
+        const shuffledAnswers = answers.sort(() => Math.random() - 0.5);
+
+        // Xóa các câu trả lời cũ
+        box.innerHTML = "";
+
+        // Thêm lại các câu trả lời đã được sáo trộn
+        shuffledAnswers.forEach((label) => {
+            box.appendChild(label);
+        });
+    });
+});

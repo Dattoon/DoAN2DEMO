@@ -134,22 +134,37 @@
     font-weight: 400;
 }
 
-.answ1 {
-    padding: 0;
-}
-
-.answ2 {
+.answ {
     display: flex;
-    -webkit-box-align: start;
-    align-items: flex-start;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    flex-direction: column;
+    flex-direction: column; /* Sắp xếp các phần tử con theo chiều dọc */
+    gap: 10px; /* Khoảng cách giữa các câu trả lời */
 }
 
 .answ3 {
-    width: 100%;
+    display: flex;
+    flex-direction: column; /* Đảm bảo các câu trả lời bên trong cũng sắp xếp theo chiều dọc */
+    gap: 10px; /* Khoảng cách giữa các radio button */
 }
+
+.answer-box label {
+    display: block; /* Đảm bảo mỗi nhãn chiếm toàn bộ chiều ngang */
+    padding: 10px; /* Thêm khoảng cách bên trong để dễ nhìn */
+    background-color: #f9f9f9; /* Màu nền nhạt cho nhãn */
+    border: 1px solid #ddd; /* Đường viền nhẹ */
+    border-radius: 5px; /* Bo góc nhãn */
+    cursor: pointer; /* Thêm hiệu ứng con trỏ */
+    transition: background-color 0.3s ease; /* Hiệu ứng hover */
+    margin:5px;
+}
+
+    .answer-box label:hover {
+        background-color: #f0f0f0; /* Màu nền khi hover */
+    }
+
+.answer-box input[type="radio"] {
+    margin-right: 10px; /* Khoảng cách giữa radio và nhãn */
+}
+
 
 [class*=formui] {
     border: 0;
