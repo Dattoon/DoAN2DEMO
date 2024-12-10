@@ -36,6 +36,11 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser(AddUserVM model)
         {
+            if (string.IsNullOrEmpty(model.AvatarUrl))
+            {
+                model.AvatarUrl = "default-avatar-url";
+            }
+
             if (!ModelState.IsValid)
             {
                 SetErrorMesg("Dữ liệu không hợp lệ vui lòng kiểm tra lại!");
@@ -57,15 +62,18 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
             try
             {
                 var user = _mapper.Map<User>(model);
+                user.IdRole = model.IdRole; // Role can be set by admin
                 await _repo.AddAsync(user);
                 SetSuccessMesg($"Thêm tài khoản [{user.UserName}] thành công");
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message); // Log exception here
                 return View(model);
             }
         }
+
         public async Task<IActionResult> EditUser(int id)
         {
             var user = await _repo.FindAsync<User>(id);
@@ -90,17 +98,34 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
 
             try
             {
-                var user = _mapper.Map<User>(model);
+                var user = await _repo.FindAsync<User>(model.Id);
+                if (user == null)
+                {
+                    SetErrorMesg("Tài khoản không tồn tại");
+                    return View(model);
+                }
+
+                user.Gmail = model.Gmail ?? user.Gmail;
+                user.PhoneNumber = model.PhoneNumber ?? user.PhoneNumber;
+                user.IdRole = model.IdRole;
+
+                if (!string.IsNullOrEmpty(model.Password))
+                {
+                    var hashResult = HashHMACSHA512(model.Password);
+                    user.PasswordHash = hashResult.Value;
+                    user.PasswordSalt = hashResult.Key;
+                }
+
                 await _repo.UpdateAsync(user);
                 SetSuccessMesg($"Chỉnh sửa tài khoản [{user.UserName}] thành công");
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message); // Log exception here
                 return View(model);
             }
         }
-
 
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -117,19 +142,19 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
                 SetSuccessMesg($"Xóa tài khoản [{user.UserName}] thành công");
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 SetErrorMesg("Xóa tài khoản không thành công");
+                Console.WriteLine(ex.Message); // Log exception here
                 return RedirectToAction(nameof(Index));
             }
         }
 
-
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(AppConst.COOKIES_AUTH);
-            SetSuccessMesg("Đã đăng xuất");
-            return RedirectToAction("Index", "Home", new { area = "" });
+            await HttpContext.SignOutAsync(AppConst.COOKIES_AUTH); SetSuccessMesg("Đã đăng xuất");
+            return RedirectToAction("Index", "Home");
+
         }
     }
 }

@@ -19,5 +19,6 @@ namespace WebHocTap.Web.Areas.Admin.ViewModels.User
         public bool? IsSubmit { get; set; }
         public byte[]? PasswordHash { get; internal set; }
         public byte[]? PasswordSalt { get; internal set; }
+        public string AvatarUrl { get; set; } = "default-avatar-url";
     }
 }
