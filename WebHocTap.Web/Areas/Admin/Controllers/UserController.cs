@@ -75,6 +75,7 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
         }
 
         public async Task<IActionResult> EditUser(int id)
+
         {
             var user = await _repo.FindAsync<User>(id);
             if (user == null)
@@ -94,6 +95,7 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
             {
                 SetErrorMesg("Dữ liệu không hợp lệ vui lòng kiểm tra lại!");
                 return View(model);
+
             }
 
             try
@@ -105,6 +107,7 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
                     return View(model);
                 }
 
+
                 user.Gmail = model.Gmail ?? user.Gmail;
                 user.PhoneNumber = model.PhoneNumber ?? user.PhoneNumber;
                 user.IdRole = model.IdRole;
@@ -114,6 +117,10 @@ namespace WebHocTap.Web.Areas.Admin.Controllers
                     var hashResult = HashHMACSHA512(model.Password);
                     user.PasswordHash = hashResult.Value;
                     user.PasswordSalt = hashResult.Key;
+                }
+                if (string.IsNullOrEmpty(model.AvatarUrl))
+                {
+                    model.AvatarUrl = "default-avatar-url";
                 }
 
                 await _repo.UpdateAsync(user);

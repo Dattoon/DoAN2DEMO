@@ -87,7 +87,7 @@ app.UseEndpoints(endpoints =>
 
 
 app.Run();
-//lỗi edit tài khoản ở admin 
+
 //tìm kiếm tại từng con contronler
 //sửa lại phân quyền
 //thêm thanh toán MOMO
