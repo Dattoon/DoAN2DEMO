@@ -10,6 +10,7 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #fff;
     transition: var(--transition-effect);
+    color: #333333;
 }
 
 h1 {
@@ -32,9 +33,53 @@ body.dark {
     background-size: 200% 200%;
     animation: gradientMove 5s infinite, twinkleEffect 2s infinite alternate;
 }
+/* Các lớp cho chế độ tối của sản phẩm */
+    body.dark h2 {
+        color:aliceblue;
+    }
+    body.dark .details h6 {
+        color: white;
+    }
+    body.dark #category .categories {
+        background: #292929;
+    }
+    body.dark .courses.dark {
+        background-color: #2E2E2E; /* Nền tối cho sản phẩm */
+        color: #E0E0E0;
+    }
 
-@keyframes gradientMove {
-    0% {
+body.dark .courses .details.dark {
+    color: #E0E0E0;
+}
+    body.dark .courses {
+        background-color: #292929;
+    }
+
+body.dark .courses .cost.dark {
+    color: #E0E0E0; /* Màu chữ chi phí trong chế độ tối */
+}
+
+body.dark .courses .btn.dark a {
+    color: #FFF; /* Màu chữ của nút khi chế độ tối */
+}
+
+body.dark .courses .btn.dark a:hover {
+    color: #90CAF9; /* Màu chữ khi hover vào nút */
+}
+    body.dark .courses .details h6 {
+        color: #fff;
+    }
+
+    body.dark nav.main-nav {
+        background-color: #2C2C2C;
+        color: #E0E0E0;
+    }
+
+    body.dark .news-main {
+        background-color: #2C2C2C;
+    }
+    @keyframes gradientMove {
+        0% {
         background-position: 0% 50%;
     }
 
@@ -71,8 +116,8 @@ body.dark {
 }
 
 .switch-toggle {
-    width: 90px;
-    height: 50px;
+    width: 70px;
+    height: 30px;
     appearance: none;
     background: #83d8ff;
     border-radius: 26px;
@@ -84,8 +129,8 @@ body.dark {
 
     .switch-toggle::before {
         content: "";
-        width: 44px;
-        height: 44px;
+        width: 24px;
+        height: 24px;
         position: absolute;
         top: 3px;
         left: 3px;
@@ -1104,7 +1149,7 @@ footer {
 
 /*header*/
 nav.main-nav {
-    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+    background: #F1F1F1;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1137,7 +1182,7 @@ nav .logo {
 
 nav a {
     text-decoration: none;
-    color: white;
+    color: ;
     font-weight: 500;
     transition: color 0.3s;
 }

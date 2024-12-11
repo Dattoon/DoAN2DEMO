@@ -207,12 +207,93 @@
         checkbox_toggle.addEventListener('change', function () {
             if (checkbox_toggle.checked) {
                 document.body.classList.add('dark');
+                document.body.classList.remove('light');
                 setDarkModeCookie("true");
             } else {
                 document.body.classList.remove('dark');
+                document.body.classList.add('light');
                 setDarkModeCookie("false");
             }
         });
+
+        // Hàm để thêm các class vào các phần tử khi chuyển chế độ
+        function toggleDarkModeClasses(isDarkMode) {
+            const nav = document.querySelector('nav');
+            const courses = document.querySelectorAll('.courses');
+            const btnLinks = document.querySelectorAll('.btn a');
+
+            if (isDarkMode) {
+                // Thêm các lớp vào các phần tử khi chế độ tối
+                nav.classList.add('dark-nav');
+                courses.forEach(course => {
+                    course.classList.add('dark-course');
+                });
+                btnLinks.forEach(link => {
+                    link.classList.add('dark-btn');
+                });
+            } else {
+                // Xóa các lớp khi chế độ sáng
+                nav.classList.remove('dark-nav');
+                courses.forEach(course => {
+                    course.classList.remove('dark-course');
+                });
+                btnLinks.forEach(link => {
+                    link.classList.remove('dark-btn');
+                });
+            }
+        }
+
+        // Kiểm tra trạng thái chế độ sáng/tối khi tải trang và áp dụng
+        if (getDarkModeCookie() === "true") {
+            toggleDarkModeClasses(true);
+        } else {
+            toggleDarkModeClasses(false);
+        }
+        // Hàm để lưu trạng thái chế độ tối vào cookie
+        function setDarkModeCookie(value) {
+            document.cookie = "darkMode=" + value + "; path=/; max-age=31536000"; // Lưu trong 1 năm
+        }
+
+        // Hàm để đọc trạng thái chế độ tối từ cookie
+        function getDarkModeCookie() {
+            const name = "darkMode=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        // Lấy đối tượng checkbox để chuyển đổi chế độ sáng/tối
+        var checkbox_toggle = document.getElementById('light-dark');
+
+        // Kiểm tra trạng thái từ cookie và áp dụng nó
+        if (getDarkModeCookie() === "true") {
+            document.body.classList.add('dark');
+            checkbox_toggle.checked = true;
+        }
+
+        // Lắng nghe sự kiện thay đổi của checkbox và lưu trạng thái vào cookie
+        checkbox_toggle.addEventListener('change', function () {
+            if (checkbox_toggle.checked) {
+                document.body.classList.add('dark');
+                document.body.classList.remove('light');
+                setDarkModeCookie("true");
+            } else {
+                document.body.classList.remove('dark');
+                document.body.classList.add('light');
+                setDarkModeCookie("false");
+            }
+        });
+
     </script>
+
 </body>
 </html>

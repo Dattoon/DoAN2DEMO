@@ -1,7 +1,6 @@
 ﻿/* CSS cho Courses Section */
 #course {
     padding: 20px;
-    background-color: #f9f9f9;
 }
 
 .course-title {
@@ -41,7 +40,7 @@
 
     #course .courses img {
         width: 100%;
-        height: auto;
+        height: 100%;
         border-bottom: 1px solid #ddd;
         padding-bottom: 10px;
         margin-bottom: 10px;
