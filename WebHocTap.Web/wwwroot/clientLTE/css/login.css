@@ -4,7 +4,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('/clientLTE/images/background.png') no-repeat center center fixed;
+    background: url('/clientLTE/images/learn.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 

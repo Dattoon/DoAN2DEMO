@@ -46,8 +46,12 @@
 
 /* Image styling: Chiếm 1/4 chiều rộng và tăng kích thước hình ảnh */
 .news-image {
+<<<<<<< Updated upstream
     width: 140px; /* Tăng kích thước hình ảnh */
     height: 140px; /* Cân đối với chiều rộng */
+=======
+    width: 240px; /* Tăng kích thước hình ảnh */
+>>>>>>> Stashed changes
     object-fit: cover;
     border-radius: 8px;
     flex-shrink: 0; /* Đảm bảo hình ảnh không bị co lại */
