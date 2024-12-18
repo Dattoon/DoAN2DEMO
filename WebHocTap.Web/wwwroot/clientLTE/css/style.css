@@ -33,9 +33,12 @@ body.dark {
     background-size: 200% 200%;
     animation: gradientMove 5s infinite, twinkleEffect 2s infinite alternate;
 }
-/* Các lớp cho chế độ tối của sản phẩm */
+    body.dark .product {
+        background-color:rgba(0, 0, 0, 0.1);
+    }
+    /* Các lớp cho chế độ tối của sản phẩm */
     body.dark h2 {
-        color:aliceblue;
+        color: aliceblue;
     }
     body.dark .details h6 {
         color: white;
@@ -351,7 +354,7 @@ p {
 
 /* Home */
 #home {
-    background-image: linear-gradient(rgba(9,5,54,0.3), rgba(5,4,46,0.7)),url("../images/"); /*Đổi Hình Nền ở đây 
+    background-image: linear-gradient(rgba(9,5,54,0.3), rgba(5,4,46,0.7)),url("/clientLTE/images/KhoaHocMienPhi.jpg"); /*Đổi Hình Nền ở đây 
     */
 
     width: 100%;
