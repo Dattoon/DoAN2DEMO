@@ -6,53 +6,92 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<head>
+    <link href="~/clientLTE/css/News.css" rel="stylesheet" />
+    <link href="~/clientLTE/css/courses.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
 <div class="container" style="padding-top: 135px;">
     <h2>Kết quả tìm kiếm cho: "@Model.Query"</h2>
 
-    <div class="section">
-        <h3>Tin tức</h3>
-        @if (!Model.NewsResults.Any())
-        {
-            <p>Không tìm thấy kết quả nào phù hợp với từ khóa tìm kiếm của bạn trong mục Tin tức.</p>
-        }
-        else
-        {
-            <ul>
-                @foreach (var news in Model.NewsResults)
+    <!-- Tin tức Section -->
+    <div class="news-container" style="padding-top: 135px;">
+        <div class="news-main">
+            <div class="news-section">
+                <h3>Tin tức</h3>
+                @if (!Model.NewsResults.Any())
                 {
-                    <li>
-                        <a asp-action="DetailNews" asp-controller="NewsClient" asp-route-id="@news.Id">@news.</a>
-                        <a asp-action="DetailNews" asp-controller="NewsClient" asp-route-id="@news.Id">@news.Title</a>
-                        <p>@Html.Raw(@news.Title)</p>
-                    </li>
+                    <p>Không tìm thấy kết quả nào phù hợp với từ khóa tìm kiếm của bạn trong mục Tin tức.</p>
                 }
-            </ul>
-            <div class="pagination-container">
-                @Html.PagedListPager(Model.NewsResults, page => Url.Action("Search", new { page, query = Model.Query }))
+                else
+                {
+                    <ul id="news-body">
+                        @foreach (var news in Model.NewsResults)
+                        {
+                            <li class="news-item">
+                                <div class="news-item-wrapper">
+                                    <div class="news-box">
+                                        <img src="~/img/news/@news.pathImg" alt="Img" class="news-image">
+                                    </div>
+                                    <div class="news-content">
+                                        <a asp-action="DetailNews" asp-controller="NewsClient" asp-route-id="@news.Id">@news.Title</a>
+                                        <p class="news-description">@Html.Raw(@news.Title)</p>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <div class="pagination-container">
+                        @Html.PagedListPager(Model.NewsResults, page => Url.Action("Search", new { page, query = Model.Query }))
+                    </div>
+                }
             </div>
-        }
+        </div>
     </div>
 
-    <div class="section">
-        <h3>Khóa học</h3>
-        @if (!Model.CourseResults.Any())
-        {
-            <p>Không tìm thấy kết quả nào phù hợp với từ khóa tìm kiếm của bạn trong mục Khóa học.</p>
-        }
-        else
-        {
-            <ul>
-                @foreach (var course in Model.CourseResults)
-                {
-                    <li>
-                        <a asp-action="DetailsSubject" asp-controller="SubjectClient" asp-route-id="@course.Id">@course.NameCategorySub</a>
-                        <p>@Html.Raw(@course.Descripstion)</p>
-                    </li>
-                }
-            </ul>
-            <div class="pagination-container">
-                @Html.PagedListPager(Model.CourseResults, page => Url.Action("Search", new { page, query = Model.Query }))
+    <!-- Khóa học Section -->
+    <section id="course">
+        <div class="course-title">
+            <h3 class="sub-title"><i class="fa fa-play-circle" aria-hidden="true"></i> Latest Prime Packs</h3>
+            <div class="text-right">
+                <a href="#" title="card view" class="btn-viewmore rounded"><i class="fa fa-sign-in" aria-hidden="true"></i> View More </a>
             </div>
-        }
-    </div>
+        </div>
+
+        <div class="course-box1" id="paginated-list" data-current-page="1" aria-live="polite">
+            <div class="section">
+                <h3>Khóa học</h3>
+                @if (!Model.CourseResults.Any())
+                {
+                    <p>Không tìm thấy kết quả nào phù hợp với từ khóa tìm kiếm của bạn trong mục Khóa học.</p>
+                }
+                else
+                {
+                    <ul>
+                        @foreach (var course in Model.CourseResults)
+                        {
+                            <li class="courses">
+                                <img src="/img/categorysub/@course.pathImg" alt="">
+                                <div class="details">
+                                    <span>Ngày tạo @course.CreateAt.ToDMY()</span>
+                                    <a asp-action="DetailsSubject" asp-controller="SubjectClient" asp-route-id="@course.Id">
+                                        <h6>@course.NameCategorySub <i class="fa fa-lock" style="color: black;"></i></h6>
+                                    </a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <div class="pagination-container">
+                        @Html.PagedListPager(Model.CourseResults, page => Url.Action("Search", new { page, query = Model.Query }))
+                    </div>
+                }
+            </div>
+        </div>
+
+        <nav class="pagination-container">
+            <button class="pagination-button" id="prev-button" title="Previous page" aria-label="Previous page">&lt;</button>
+            <div id="pagination-numbers"></div>
+            <button class="pagination-button" id="next-button" title="Next page" aria-label="Next page">&gt;</button>
+        </nav>
+    </section>
 </div>
