@@ -167,4 +167,44 @@
             loadComments();
         });
     </script>
+    <script type="text/JavaScript">
+        function disableCopy(e) {
+            return false;
+        }
+        function reEnable() {
+            return true;
+        }
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const noCopyElements = document.querySelectorAll('.no-copy');
+            noCopyElements.forEach(element => {
+                element.oncontextmenu = function () { return false; };
+                element.onselectstart = function () { return false; };
+                element.onmousedown = function () { return false; };
+            });
+        });
+
+        window.onload = function () {
+            document.addEventListener("contextmenu", function (e) {
+                if (e.target.closest('.no-copy')) {
+                    e.preventDefault();
+                }
+            }, false);
+            document.addEventListener("keydown", function (e) {
+                if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 85) ||
+                    e.keyCode == 123 ||
+                    (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey))) {
+                    if (e.target.closest('.no-copy')) {
+                        disabledEvent(e);
+                    }
+                }
+            }, false);
+
+            function disabledEvent(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                return false;
+            }
+        };
+    </script>
+    <script src="~/clientLTE/js/detaillesson.js" asp-append-version="true"></script>
 }
